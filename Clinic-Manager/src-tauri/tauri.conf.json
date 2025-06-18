@@ -2,7 +2,7 @@
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "Clinic-Manager",
   "version": "0.1.0",
-  "identifier": "com.tauri.dev",
+      "identifier": "com.policlinica.losangeles",
   "build": {
     "frontendDist": "../dist/clinic-manager",
     "devUrl": "http://localhost:4200",
@@ -13,8 +13,12 @@
     "windows": [
       {
         "title": "Policlínica-Los-Angeles",
-        "width": 800,
-        "height": 600,
+        "width": 1200,
+        "height": 800,
+        "minWidth": 600,
+        "minHeight": 400,
+        "maxWidth": 1920,
+        "maxHeight": 1080,
         "resizable": true,
         "fullscreen": false
       }

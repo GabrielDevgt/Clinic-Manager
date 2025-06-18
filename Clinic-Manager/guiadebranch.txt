@@ -1,0 +1,24 @@
+# Asegúrate de estar en main
+git checkout main
+
+# Crea un nuevo branch para tu integración de SQLite
+git branch feature/sqlite-integration
+
+# Cambia a ese nuevo branch
+git checkout feature/sqlite-integration
+
+# Ahora haz tus cambios en el código de Tauri/Angular para SQLite
+# ... (modifica archivos, añade código, etc.) ...
+
+# Añade y haz commit de tus cambios en este branch
+git add .
+git commit -m "feat: Implement basic SQLite integration"
+
+# Una vez que la funcionalidad esté lista y probada, vuelve a main
+git checkout main
+
+# Fusiona tu branch de funcionalidad con main
+git merge feature/sqlite-integration
+
+# (Opcional) Borra el branch de funcionalidad una vez fusionado
+git branch -d feature/sqlite-integration
