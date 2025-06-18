@@ -1,0 +1,30 @@
+// Variables de colores (mismas del navbar para consistencia)
+$primary-blue: #1e3a8a;
+$secondary-blue: #3b82f6;
+$light-blue: #e0f2fe;
+$accent-blue: #0ea5e9;
+$dark-blue: #0f172a;
+$white: #ffffff;
+$gray-light: #f8fafc;
+$gray-medium: #64748b;
+$gray-dark: #374151;
+$shadow-color: rgba(30, 58, 138, 0.1);
+
+// Fuentes
+$font-primary: 'Inter', 'Segoe UI', sans-serif;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+// Variante minimalista
+.footer-minimal {
+  margin-top: 5rem;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  background: $gray-light;
+  border-top: 1px solid rgba($gray-medium, 0.2);
+  
+  small {
+    color: $dark-blue;
+    font-size: 0.8rem;
+    font-weight: $font-weight-normal;
+  }
+}

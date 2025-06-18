@@ -1,15 +1,32 @@
 <nav class="navbar-container">
-  <!-- Botones -->
+  <!-- Botones con iconos -->
   <div class="navbar-buttons">
-    <button>Pacientes</button>
-    <button>Consultas</button>
-    <button>Citas</button>
-    <button>Tratamientos</button>
-    <button>Exámenes</button>
+    <button (click)="irA('pacientes')">
+      <span class="btn-icon">👥</span>
+      Pacientes
+    </button>
+    <button (click)="irA('consultas')">
+      <span class="btn-icon">📋</span>
+      Consultas
+    </button>
+    <button (click)="irA('citas')">
+      <span class="btn-icon">📅</span>
+      Citas
+    </button>
+    <button (click)="irA('tratamientos')">
+      <span class="btn-icon">💊</span>
+      Tratamientos
+    </button>
+    <button (click)="irA('examenes')">
+      <span class="btn-icon">🔬</span>
+      Exámenes
+    </button>
   </div>
+
   <!-- Información del doctor -->
   <div class="navbar-doctor-info">
     <div>Doctor Alejandro Caballero</div>
     <small>Médico Internista</small>
   </div>
 </nav>
+
