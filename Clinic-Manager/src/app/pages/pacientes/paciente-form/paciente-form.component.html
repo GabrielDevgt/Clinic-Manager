@@ -1,2 +1,81 @@
+<div class="contenedor-clinico">
+    <header class="cabecera-clinica">
+        <h1>Registro de Paciente</h1>
+        <div class="decoracion-azul"></div>
+    </header>
 
-<h2 class="">Registro de Paciente</h2>
+    <form class="formulario-clinico">
+        <!-- Primera fila -->
+        <div class="fila-formulario">
+            <div class="grupo-campo">
+                <label for="nombre1">Primer Nombre *</label>
+                <input type="text" id="nombre1" name="nombre1" required placeholder="Ej: María">
+            </div>
+            <div class="grupo-campo">
+                <label for="nombre2">Segundo Nombre</label>
+                <input type="text" id="nombre2" name="nombre2" placeholder="Opcional">
+            </div>
+            <div class="grupo-campo">
+                <label for="nombre2">Tercer Nombre (Opcional)</label>
+                <input type="text" id="nombre2" name="nombre2" placeholder="Opcional">
+            </div>
+        </div>
+
+        <!-- Segunda fila -->
+        <div class="fila-formulario">
+            <div class="grupo-campo">
+                <label for="apellido1">Primer Apellido *</label>
+                <input type="text" id="apellido1" name="apellido1" required placeholder="Ej: González">
+            </div>
+            <div class="grupo-campo">
+                <label for="apellido2">Segundo Apellido</label>
+                <input type="text" id="apellido2" name="apellido2" placeholder="Opcional">
+            </div>
+            <div class="grupo-campo">
+                <label for="apellidoCasado">Apellido de Casado</label>
+                <input type="text" id="apellidoCasado" name="apellidoCasado" placeholder="Si aplica">
+            </div>
+        </div>
+
+        <!-- Tercera fila -->
+        <div class="fila-formulario">
+
+            <div class="grupo-campo">
+                <label for="telefono">Teléfono *</label>
+                <input type="tel" id="telefono" name="telefono" required placeholder="Ej: 555-1234567">
+            </div>
+            <div class="grupo-campo direccion-completa">
+                <label for="direccion">Dirección</label>
+                <input type="text" id="direccion" name="direccion" placeholder="Calle, número, ciudad">
+            </div>
+        </div>
+
+        <!-- Cuarta fila -->
+        <div class="fila-formulario">
+
+        </div>
+
+        <!-- Quinta fila -->
+        <div class="fila-formulario">
+            <div class="grupo-campo">
+                <label for="fechaNacimiento">Fecha de Nacimiento *</label>
+                <input type="date" id="fechaNacimiento" name="fechaNacimiento" required>
+            </div>
+            <div class="grupo-campo">
+                <label for="genero">Género</label>
+                <select id="genero" name="genero">
+                    <option value="Femenino">Femenino</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Otro">Otro</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Botones -->
+        <div class="contenedor-botones">
+            <button type="submit" class="btn-guardar2">Guardar Paciente y Agregar Consulta</button>
+            <button type="submit" class="btn-guardar">Guardar Paciente</button>
+            <button type="button" class="btn-cancelar">Cancelar</button>
+        </div>
+    </form>
+</div>
