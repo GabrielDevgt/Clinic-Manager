@@ -90,8 +90,9 @@ $transition: all 0.3s ease;
     }
 
     &:hover {
-      background: $dark-blue;
-      color: $white;
+      background: $light-blue;
+      color: $primary-blue;
+      border-color: #d7e9f2;
       transform: translateY(-2px);
       box-shadow: 0 8px 25px rgba($secondary-blue, 0.3);
 
