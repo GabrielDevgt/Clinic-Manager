@@ -106,4 +106,25 @@ export class PacienteService {
     const telefonoLimpio = telefono.replace(/\s/g, '');
     return telefonoLimpio.length >= 8 && /^\d+$/.test(telefonoLimpio);
   }
+
+  /**
+ * Obtiene un paciente específico por ID
+ * @param id ID del paciente a buscar
+ * @returns Observable con el paciente encontrado
+ */
+  obtenerPacientePorId(id: number): Observable<Paciente> {
+    return from(
+      invoke<Paciente>('obtener_paciente_por_id', { id })
+        .then(paciente => {
+          console.log('Paciente obtenido:', paciente);
+          return paciente;
+        })
+        .catch(error => {
+          console.error('Error obteniendo paciente:', error);
+          throw error;
+        })
+    );
+  }
+
+  
 }

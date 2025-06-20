@@ -1,0 +1,65 @@
+<div class="detalle-container">
+    <div class="header">
+        <button class="btn-volver" (click)="volverALista()">? Volver</button>
+        <h1>Perfil del Paciente</h1>
+    </div>
+
+    <div class="paciente-card" *ngIf="paciente; else loading">
+        <div class="paciente-header">
+            <h2>{{ obtenerNombreCompleto() }}</h2>
+            <span class="id-paciente">#{{ paciente.id_paciente }}</span>
+        </div>
+
+        <div class="paciente-body">
+            <div class="row">
+                <div class="col">
+                    <h3>Información Básica</h3>
+                    <p><strong>Primer Nombre:</strong> {{ paciente.nombre_1 }}</p>
+                    <p><strong>Segundo Nombre:</strong> {{ paciente.nombre_2 || 'No especificado' }}</p>
+                    <p><strong>Tercer Nombre:</strong> {{ paciente.nombre_3 || 'No especificado' }}</p>
+                    <p><strong>Edad:</strong> {{ calcularEdad() }}</p>
+                    <p><strong>Género:</strong> 
+                        <span class="badge-genero" [ngClass]="{
+                            'femenino': paciente.genero === 'Femenino',
+                            'masculino': paciente.genero === 'Masculino',
+                            'otro': paciente.genero === 'Otro'
+                        }">
+                            {{ paciente.genero }}
+                        </span>
+                    </p>
+                    <p><strong>Fecha Nacimiento:</strong> {{ formatearFecha(paciente.fecha_nacimiento) }}</p>
+                </div>
+
+                <div class="col">
+                    <h3>Apellidos</h3>
+                    <p><strong>Primer Apellido:</strong> {{ paciente.apellido_1 }}</p>
+                    <p><strong>Segundo Apellido:</strong> {{ paciente.apellido_2 || 'No especificado' }}</p>
+                    <p><strong>Apellido Casado:</strong> {{ paciente.apellido_casado || 'No aplica' }}</p>
+                    
+                    <h3>Contacto</h3>
+                    <p><strong>Teléfono:</strong> {{ paciente.telefono || 'No disponible' }}</p>
+                    <p><strong>Dirección:</strong> {{ paciente.direccion || 'No disponible' }}</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <h3>Información Adicional</h3>
+                    <p><strong>Fecha Registro:</strong> {{ formatearFecha(paciente.fecha_registro) || 'No disponible' }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="paciente-actions">
+            <button class="btn-editar" (click)="editarPaciente()">?? Editar Paciente</button>
+            <button class="btn-historial" (click)="verHistorial()">?? Ver Historial Médico</button>
+        </div>
+    </div>
+
+    <ng-template #loading>
+        <div class="loading-container">
+            <p *ngIf="!error">Cargando información del paciente...</p>
+            <p class="error-message" *ngIf="error">{{ error }}</p>
+        </div>
+    </ng-template>
+</div>

@@ -7,16 +7,11 @@
                 <span class="btn-icon">👤</span>
                 Agregar Paciente
             </button>
-            
+
             <div class="search-container">
                 <span class="search-icon">🔍</span>
-                <input 
-                    type="text" 
-                    class="search-input"
-                    placeholder="Buscar por nombre, teléfono o dirección..." 
-                    (input)="onSearchInput($event)"
-                    [value]="terminoBusqueda"
-                >
+                <input type="text" class="search-input" placeholder="Buscar por nombre, teléfono o dirección..."
+                    (input)="onSearchInput($event)" [value]="terminoBusqueda">
             </div>
         </div>
     </div>
@@ -24,16 +19,12 @@
     <!-- Toolbar -->
     <div class="toolbar">
         <div class="contador-resultados" *ngIf="!cargando && !error">
-            Mostrando <span class="highlight">{{ pacienteFiltrado.length }}</span> 
+            Mostrando <span class="highlight">{{ pacienteFiltrado.length }}</span>
             de <span class="highlight">{{ pacientes.length }}</span> pacientes
             <span *ngIf="terminoBusqueda"> para "<strong>{{ terminoBusqueda }}</strong>"</span>
         </div>
-        
-        <button 
-            (click)="refrescar()" 
-            class="btn btn-refresh" 
-            [disabled]="cargando"
-        >
+
+        <button (click)="refrescar()" class="btn btn-refresh" [disabled]="cargando">
             <span class="btn-icon">🔄</span>
             {{ cargando ? 'Cargando...' : 'Refrescar' }}
         </button>
@@ -87,15 +78,13 @@
                         </div>
                     </td>
                     <td>
-                        <!-- <strong>{{ calcularEdad(paciente.fecha_nacimiento) || 'N/A' }}</strong> -->
+                        <strong>{{ calcularEdad(paciente.fecha_nacimiento) }} {{ typeof
+                            calcularEdad(paciente.fecha_nacimiento) === 'number' ? 'años' : '' }}</strong>
                     </td>
                     <td>
-                        <span 
-                            class="badge-genero" 
-                            [class.femenino]="paciente.genero === 'Femenino'"
+                        <span class="badge-genero" [class.femenino]="paciente.genero === 'Femenino'"
                             [class.masculino]="paciente.genero === 'Masculino'"
-                            [class.otro]="paciente.genero === 'Otro'"
-                        >
+                            [class.otro]="paciente.genero === 'Otro'">
                             {{ paciente.genero }}
                         </span>
                     </td>
@@ -107,13 +96,10 @@
                     </td>
                     <td>
                         <div class="acciones-tabla">
-                            <!-- <button 
-                                class="btn-accion btn-editar"
-                                (click)="editarPaciente(paciente)"
-                                title="Editar paciente"
-                            >
-                                ✏️ Editar
-                            </button> -->
+                            <button class="btn-accion btn-detalles" (click)="verDetalles(paciente.id_paciente)"
+                                title="Ver detalles completos">
+                                 Detalles
+                            </button>
                             <!-- <button 
                                 class="btn-accion btn-historial"
                                 (click)="verHistorial(paciente)"
