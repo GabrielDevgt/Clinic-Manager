@@ -39,6 +39,48 @@ export class PacientesComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+verDetalles(idPaciente: number): void {
+    this.router.navigate(['/pacientes/detalle', idPaciente]);
+}
+
+
+  /**
+ * Calcula la edad mostrando meses para edades menores a 2 años
+ * @param fechaNacimiento Fecha de nacimiento en formato string (YYYY-MM-DD)
+ * @returns Edad en formato 'X años' o 'Y meses' o 'N/A' si no hay fecha
+ */
+calcularEdad(fechaNacimiento?: string): string {
+  if (!fechaNacimiento) return 'N/A';
+  
+  try {
+    const fechaNac = new Date(fechaNacimiento);
+    const hoy = new Date();
+    
+    // Validar que la fecha sea válida
+    if (isNaN(fechaNac.getTime())) return 'N/A';
+    
+    // Calcular diferencia en meses
+    let meses = (hoy.getFullYear() - fechaNac.getFullYear()) * 12;
+    meses += hoy.getMonth() - fechaNac.getMonth();
+    
+    // Ajustar si el día actual es anterior al día de nacimiento
+    if (hoy.getDate() < fechaNac.getDate()) {
+      meses--;
+    }
+    
+    // Si es menor a 24 meses (2 años), mostrar en meses
+    if (meses < 24) {
+      return meses <= 0 ? 'Recién nacido' : `${meses} ${meses === 1 ? 'mes' : 'meses'}`;
+    }
+    
+    // Para mayores de 2 años, mostrar en años
+    const años = Math.floor(meses / 12);
+    return `${años} ${años === 1 ? 'año' : 'años'}`;
+  } catch (error) {
+    console.error('Error calculando edad:', error);
+    return 'N/A';
+  }
+}
   /**
    * Carga la lista de pacientes desde la base de datos
    */

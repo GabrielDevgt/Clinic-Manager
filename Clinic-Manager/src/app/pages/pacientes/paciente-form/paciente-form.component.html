@@ -4,7 +4,7 @@
         <div class="decoracion-azul"></div>
     </header>
 
-    <form class="formulario-clinico">
+    <form class="formulario-clinico" (submit)="onSubmit($event)">
         <!-- Primera fila -->
         <div class="fila-formulario">
             <div class="grupo-campo">
@@ -16,8 +16,8 @@
                 <input type="text" id="nombre2" name="nombre2" placeholder="Opcional">
             </div>
             <div class="grupo-campo">
-                <label for="nombre2">Tercer Nombre (Opcional)</label>
-                <input type="text" id="nombre2" name="nombre2" placeholder="Opcional">
+                <label for="nombre3">Tercer Nombre (Opcional)</label>
+                <input type="text" id="nombre3" name="nombre3" placeholder="Opcional">
             </div>
         </div>
 
@@ -39,10 +39,14 @@
 
         <!-- Tercera fila -->
         <div class="fila-formulario">
-
             <div class="grupo-campo">
                 <label for="telefono">Teléfono *</label>
-                <input type="tel" id="telefono" name="telefono" required placeholder="Ej: 555-1234567">
+                <input type="tel" id="telefono" name="telefono" required 
+                       placeholder="Ej: 55512345" 
+                       pattern="[0-9]{8}" 
+                       title="El teléfono debe tener exactamente 8 dígitos"
+                       minlength="8"
+                       maxlength="8">
             </div>
             <div class="grupo-campo direccion-completa">
                 <label for="direccion">Dirección</label>
@@ -52,14 +56,15 @@
 
         <!-- Cuarta fila -->
         <div class="fila-formulario">
-
+            <!-- Espacio reservado para futuros campos si es necesario -->
         </div>
 
         <!-- Quinta fila -->
         <div class="fila-formulario">
             <div class="grupo-campo">
                 <label for="fechaNacimiento">Fecha de Nacimiento *</label>
-                <input type="date" id="fechaNacimiento" name="fechaNacimiento" required>
+                <input type="date" id="fechaNacimiento" name="fechaNacimiento" required
+                       max="2025-06-21"> <!-- Actualizar esta fecha según sea necesario -->
             </div>
             <div class="grupo-campo">
                 <label for="genero">Género</label>
@@ -73,7 +78,9 @@
 
         <!-- Botones -->
         <div class="contenedor-botones">
-            <button type="submit" class="btn-guardar2">Guardar Paciente y Agregar Consulta</button>
+            <button type="button" class="btn-guardar2" (click)="guardarYRedireccionar($event)">
+                Guardar Paciente y Agregar Consulta
+            </button>
             <button type="submit" class="btn-guardar">Guardar Paciente</button>
             <button type="button" class="btn-cancelar">Cancelar</button>
         </div>
