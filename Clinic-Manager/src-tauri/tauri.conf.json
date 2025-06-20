@@ -4,7 +4,7 @@
   "version": "0.1.0",
       "identifier": "com.policlinica.losangeles",
   "build": {
-    "frontendDist": "../dist/clinic-manager",
+    "frontendDist": "../dist/clinic-manager/browser",
     "devUrl": "http://localhost:4200",
     "beforeDevCommand": "",
     "beforeBuildCommand": "npm run build"

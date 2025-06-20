@@ -1,38 +1,130 @@
 <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <h1 class="title">Gestión de Pacientes</h1>
-            <div class="actions">
-                <button class="btn btn-primary" (click)="irANuevoPaciente()">
-                    <span class="icon-user-plus"></span>
-                    Agregar Paciente
-                </button>
-                <button class="btn btn-info">
-                    <span class="icon-search"></span>
-                    Buscar
-                </button>
+    <!-- Header Section -->
+    <div class="header">
+        <h1 class="title">Gestión de Pacientes</h1>
+        <div class="actions">
+            <button class="btn btn-primary" (click)="irANuevoPaciente()">
+                <span class="btn-icon">👤</span>
+                Agregar Paciente
+            </button>
+            
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input 
+                    type="text" 
+                    class="search-input"
+                    placeholder="Buscar por nombre, teléfono o dirección..." 
+                    (input)="onSearchInput($event)"
+                    [value]="terminoBusqueda"
+                >
             </div>
         </div>
+    </div>
 
-        <!-- Tabla -->
-        <div class="table-container">
-            <table class="table">
-                <thead class="table-header">
-                    <tr>
-                        <th>ID</th>
-                        <th>Paciente</th>
-                        <th>Edad</th>
-                        <th>Género</th>
-                        <th>Teléfono</th>
-                        <th>Última consulta</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                       
-                    </tr>
-                </tbody>
-            </table>
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <div class="contador-resultados" *ngIf="!cargando && !error">
+            Mostrando <span class="highlight">{{ pacienteFiltrado.length }}</span> 
+            de <span class="highlight">{{ pacientes.length }}</span> pacientes
+            <span *ngIf="terminoBusqueda"> para "<strong>{{ terminoBusqueda }}</strong>"</span>
+        </div>
+        
+        <button 
+            (click)="refrescar()" 
+            class="btn btn-refresh" 
+            [disabled]="cargando"
+        >
+            <span class="btn-icon">🔄</span>
+            {{ cargando ? 'Cargando...' : 'Refrescar' }}
+        </button>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="cargando" class="mensaje mensaje-carga">
+        Cargando pacientes...
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error" class="mensaje mensaje-error">
+        <strong>Error:</strong> {{ error }}
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!cargando && !error && pacienteFiltrado.length === 0" class="mensaje mensaje-vacio">
+        <div *ngIf="pacientes.length === 0">
+            <h3>No hay pacientes registrados</h3>
+            <p>Comienza agregando tu primer paciente</p>
+        </div>
+        <div *ngIf="pacientes.length > 0">
+            <h3>No se encontraron resultados</h3>
+            <p>Intenta con otro término de búsqueda</p>
         </div>
     </div>
+
+    <!-- Table Container -->
+    <div *ngIf="!cargando && !error && pacienteFiltrado.length > 0" class="tabla-container">
+        <table class="tabla-pacientes">
+            <thead>
+                <tr>
+                    <th>Paciente</th>
+                    <th>Edad</th>
+                    <th>Género</th>
+                    <th>Teléfono</th>
+                    <th>Última consulta</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let paciente of pacienteFiltrado; trackBy: trackByPacienteId">
+                    <td>
+                        <div class="paciente-info">
+                            <div class="nombre-paciente">
+                                {{ obtenerNombreCompleto(paciente) }}
+                            </div>
+                            <div class="id-paciente">
+                                #{{ paciente.id_paciente }}
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <!-- <strong>{{ calcularEdad(paciente.fecha_nacimiento) || 'N/A' }}</strong> -->
+                    </td>
+                    <td>
+                        <span 
+                            class="badge-genero" 
+                            [class.femenino]="paciente.genero === 'Femenino'"
+                            [class.masculino]="paciente.genero === 'Masculino'"
+                            [class.otro]="paciente.genero === 'Otro'"
+                        >
+                            {{ paciente.genero }}
+                        </span>
+                    </td>
+                    <td>
+                        <strong>{{ paciente.telefono || 'No disponible' }}</strong>
+                    </td>
+                    <td>
+                        <!-- {{ paciente.ultima_consulta || 'Sin consultas' }} -->
+                    </td>
+                    <td>
+                        <div class="acciones-tabla">
+                            <!-- <button 
+                                class="btn-accion btn-editar"
+                                (click)="editarPaciente(paciente)"
+                                title="Editar paciente"
+                            >
+                                ✏️ Editar
+                            </button> -->
+                            <!-- <button 
+                                class="btn-accion btn-historial"
+                                (click)="verHistorial(paciente)"
+                                title="Ver historial médico"
+                            >
+                                📋 Historial
+                            </button> -->
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
