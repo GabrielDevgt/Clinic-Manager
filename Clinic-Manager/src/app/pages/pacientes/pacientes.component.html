@@ -1,25 +1,54 @@
 <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <h1 class="title">Gestión de Pacientes</h1>
-            <div class="actions">
-                <button class="btn btn-primary" (click)="irANuevoPaciente()">
-                    <span class="icon-user-plus"></span>
-                    Agregar Paciente
-                </button>
-                <button class="btn btn-info">
-                    <span class="icon-search"></span>
-                    Buscar
+    <div class="header">
+        <h1 class="title">Gestión de Pacientes</h1>
+        <div class="actions">
+            <button class="btn btn-primary" (click)="irANuevoPaciente()">
+                <span class="icon-user-plus"></span>
+                Agregar Paciente
+            </button>
+            <button class="btn btn-info">
+                <span class="icon-search"></span>
+                Buscar
+                            <input type="text" placeholder="Nombre, teléfono o dirección..." (input)="onSearchInput($event)"
+                [value]="terminoBusqueda" class="input-minimalista">
+            </button>
+
+        </div>
+    </div>
+
+    <!-- Barra de búsqueda -->
+    <div class="fila-formulario">
+        <div class="grupo-campo" style="flex-grow: 1;">
+            <div style="margin-top: 24px;">
+                <button (click)="refrescar()" class="btn-guardar" [disabled]="cargando">
+                    Refrescar
                 </button>
             </div>
         </div>
 
-        <!-- Tabla -->
-        <div class="table-container">
-            <table class="table">
-                <thead class="table-header">
+        <!-- Estados -->
+        <div *ngIf="cargando" class="mensaje-carga">
+            Cargando pacientes...
+        </div>
+
+        <div *ngIf="error" class="mensaje-error">
+            {{ error }}
+        </div>
+
+        <!-- Tabla de pacientes -->
+        <div *ngIf="!cargando && !error" class="tabla-container">
+            <div class="contador-resultados">
+                Mostrando {{ pacienteFiltrado.length }} de {{ pacientes.length }} pacientes
+                <span *ngIf="terminoBusqueda">para "{{ terminoBusqueda }}"</span>
+            </div>
+
+            <div *ngIf="pacienteFiltrado.length === 0" class="mensaje-vacio">
+                {{ pacientes.length === 0 ? 'No hay pacientes registrados' : 'No se encontraron resultados' }}
+            </div>
+
+            <table *ngIf="pacienteFiltrado.length > 0" class="tabla-pacientes">
+                <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Paciente</th>
                         <th>Edad</th>
                         <th>Género</th>
@@ -29,8 +58,29 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                       
+                    <tr *ngFor="let paciente of pacienteFiltrado; trackBy: trackByPacienteId">
+                        <td>
+                            <strong>{{ obtenerNombreCompleto(paciente) }}</strong>
+                            <div class="id-paciente">#{{ paciente.id_paciente }}</div>
+                        </td>
+                        <td>
+                            <!-- {{ calcularEdad(paciente.fecha_nacimiento) }} -->
+                        </td>
+                        <td>
+                            <span class="badge-genero" [class.femenino]="paciente.genero === 'Femenino'"
+                                [class.masculino]="paciente.genero === 'Masculino'"
+                                [class.otro]="paciente.genero === 'Otro'">
+                                {{ paciente.genero }}
+                            </span>
+                        </td>
+                        <td>{{ paciente.telefono }}</td>
+                        <td>
+                            <!-- {{ paciente.ultima_consulta || 'N/A' }} -->
+                        </td>
+                        <td>
+                            <button class="btn-accion">Editar</button>
+                            <button class="btn-accion">Historial</button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
