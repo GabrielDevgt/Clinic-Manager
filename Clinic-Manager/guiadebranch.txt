@@ -23,5 +23,3 @@ git merge feature/sqlite-integration
 # (Opcional) Borra el branch de funcionalidad una vez fusionado
 git branch -d feature/sqlite-integration
 
-
---live-reload=false
