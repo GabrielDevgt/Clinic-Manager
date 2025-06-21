@@ -27,6 +27,27 @@ struct Paciente {
     fecha_registro: Option<String>,
 }
 
+
+// Agrega esto cerca de las otras definiciones de structs
+#[derive(serde::Serialize, serde::Deserialize)]
+struct Consulta {
+    id_consulta: i32,
+    id_paciente: i32,
+    motivo_consulta: String,
+    fecha_consulta: String,
+    peso: Option<f64>,
+    altura: Option<f64>,
+    frecuencia_cardiaca: Option<i32>,
+    presion_arterial: Option<String>,
+    id_antecedente: Option<i32>,
+    id_episodio: Option<i32>,
+    id_laboratorio: Option<i32>,
+    id_examen_fisico: Option<i32>,
+    id_diagnostico: Option<i32>,
+    proxima_cita: String,
+    id_plan_terapeutico: Option<i32>,
+}
+
 fn inicializar_bases_datos() -> Result<()> {
     // Conexión a la base de datos original
     let conexion = Connection::open("my-db2.db3").expect("error conectando a sqlite");
@@ -380,6 +401,176 @@ fn obtener_paciente_por_id(id: i32) -> Result<Paciente, String> {
     }
 }
 
+#[command]
+fn actualizar_paciente(
+    id: i32,
+    nombre_1: String,
+    nombre_2: String,
+    nombre_3: Option<String>,
+    apellido_1: String,
+    apellido_2: Option<String>,
+    apellido_casado: Option<String>,
+    fecha_nacimiento: String,
+    direccion: String,
+    telefono: String,
+    genero: String,
+) -> Result<String, String> {
+    let conn = Connection::open("clinica.db")
+        .map_err(|e| format!("Error conectando a la base de datos: {}", e))?;
+
+    conn.execute(
+        "UPDATE paciente SET 
+            nombre_1 = ?1, 
+            nombre_2 = ?2, 
+            nombre_3 = ?3, 
+            apellido_1 = ?4, 
+            apellido_2 = ?5, 
+            apellido_casado = ?6, 
+            fecha_nacimiento = ?7, 
+            direccion = ?8, 
+            telefono = ?9, 
+            genero = ?10 
+        WHERE id_paciente = ?11",
+        rusqlite::params![
+            nombre_1,
+            nombre_2,
+            nombre_3,
+            apellido_1,
+            apellido_2,
+            apellido_casado,
+            fecha_nacimiento,
+            direccion,
+            telefono,
+            genero,
+            id
+        ],
+    )
+    .map_err(|e| format!("Error actualizando paciente: {}", e))?;
+
+    Ok(format!("Paciente con ID {} actualizado correctamente", id))
+}
+
+// Agrega estos comandos dentro del #[command] macro, antes del main()
+
+#[command]
+fn obtener_consultas() -> Result<Vec<Consulta>, String> {
+    let conexion = Connection::open("clinica.db")
+        .map_err(|e| format!("Error conectando a la base de datos: {}", e))?;
+
+    let mut statement = conexion
+        .prepare("SELECT id_consulta, id_paciente, motivo_consulta, fecha_consulta, peso, altura, frecuencia_cardiaca, presion_arterial, id_antecedente, id_episodio, id_laboratorio, id_examen_fisico, id_diagnostico, proxima_cita, id_plan_terapeutico FROM consulta")
+        .map_err(|e| format!("Error preparando consulta: {}", e))?;
+
+    let consultas_iter = statement
+        .query_map([], |row| {
+            Ok(Consulta {
+                id_consulta: row.get(0)?,
+                id_paciente: row.get(1)?,
+                motivo_consulta: row.get(2)?,
+                fecha_consulta: row.get(3)?,
+                peso: row.get(4)?,
+                altura: row.get(5)?,
+                frecuencia_cardiaca: row.get(6)?,
+                presion_arterial: row.get(7)?,
+                id_antecedente: row.get(8)?,
+                id_episodio: row.get(9)?,
+                id_laboratorio: row.get(10)?,
+                id_examen_fisico: row.get(11)?,
+                id_diagnostico: row.get(12)?,
+                proxima_cita: row.get(13)?,
+                id_plan_terapeutico: row.get(14)?,
+            })
+        })
+        .map_err(|e| format!("Error ejecutando consulta: {}", e))?;
+
+    let mut consultas = Vec::new();
+    for consulta in consultas_iter {
+        consultas.push(consulta.map_err(|e| format!("Error procesando consulta: {}", e))?);
+    }
+
+    Ok(consultas)
+}
+
+#[command]
+fn obtener_consulta_por_id(id: i32) -> Result<Consulta, String> {
+    let conexion = Connection::open("clinica.db")
+        .map_err(|e| format!("Error conectando a la base de datos: {}", e))?;
+
+    let mut statement = conexion
+        .prepare("SELECT id_consulta, id_paciente, motivo_consulta, fecha_consulta, peso, altura, frecuencia_cardiaca, presion_arterial, id_antecedente, id_episodio, id_laboratorio, id_examen_fisico, id_diagnostico, proxima_cita, id_plan_terapeutico FROM consulta WHERE id_consulta = ?1")
+        .map_err(|e| format!("Error preparando consulta: {}", e))?;
+
+    statement.query_row([id], |row| {
+        Ok(Consulta {
+            id_consulta: row.get(0)?,
+            id_paciente: row.get(1)?,
+            motivo_consulta: row.get(2)?,
+            fecha_consulta: row.get(3)?,
+            peso: row.get(4)?,
+            altura: row.get(5)?,
+            frecuencia_cardiaca: row.get(6)?,
+            presion_arterial: row.get(7)?,
+            id_antecedente: row.get(8)?,
+            id_episodio: row.get(9)?,
+            id_laboratorio: row.get(10)?,
+            id_examen_fisico: row.get(11)?,
+            id_diagnostico: row.get(12)?,
+            proxima_cita: row.get(13)?,
+            id_plan_terapeutico: row.get(14)?,
+        })
+    })
+    .map_err(|e| format!("Error obteniendo consulta: {}", e))
+}
+
+#[command]
+fn crear_consulta(
+    id_paciente: i32,
+    motivo_consulta: String,
+    fecha_consulta: String,
+    peso: Option<f64>,
+    altura: Option<f64>,
+    frecuencia_cardiaca: Option<i32>,
+    presion_arterial: Option<String>,
+    id_antecedente: Option<i32>,
+    id_episodio: Option<i32>,
+    id_laboratorio: Option<i32>,
+    id_examen_fisico: Option<i32>,
+    id_diagnostico: Option<i32>,
+    proxima_cita: String,
+    id_plan_terapeutico: Option<i32>,
+) -> Result<String, String> {
+    let conexion = Connection::open("clinica.db")
+        .map_err(|e| format!("Error conectando a la base de datos: {}", e))?;
+
+    conexion
+        .execute(
+            "INSERT INTO consulta (
+                id_paciente, motivo_consulta, fecha_consulta, peso, altura, 
+                frecuencia_cardiaca, presion_arterial, id_antecedente, id_episodio, 
+                id_laboratorio, id_examen_fisico, id_diagnostico, proxima_cita, id_plan_terapeutico
+            ) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14)",
+            rusqlite::params![
+                id_paciente,
+                motivo_consulta,
+                fecha_consulta,
+                peso,
+                altura,
+                frecuencia_cardiaca,
+                presion_arterial,
+                id_antecedente,
+                id_episodio,
+                id_laboratorio,
+                id_examen_fisico,
+                id_diagnostico,
+                proxima_cita,
+                id_plan_terapeutico
+            ],
+        )
+        .map_err(|e| format!("Error insertando consulta: {}", e))?;
+
+    Ok("Consulta creada exitosamente".to_string())
+}
+
 
 
 fn main() {
@@ -388,7 +579,15 @@ fn main() {
 
     // Iniciar la aplicación Tauri
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![insertar_paciente, obtener_pacientes, obtener_paciente_por_id])
+        .invoke_handler(tauri::generate_handler![
+    insertar_paciente,
+    obtener_pacientes,
+    obtener_paciente_por_id,
+    actualizar_paciente,
+    obtener_consultas,
+    obtener_consulta_por_id,
+    crear_consulta
+])
         .run(tauri::generate_context!())
         .expect("Error al iniciar Tauri");
 }
