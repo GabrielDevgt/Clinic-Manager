@@ -40,7 +40,9 @@ export class PacienteFormComponent {
       }
     });
   }
-
+  volverAPerfil(): void {
+    this.router.navigate(['pacientes']);
+  }
   // Método original para solo guardar
   onSubmit(event: Event) {
     event.preventDefault();
@@ -58,6 +60,7 @@ export class PacienteFormComponent {
       telefono: (form['telefono'] as HTMLInputElement).value,
       genero: (form['genero'] as HTMLSelectElement).value as 'Masculino' | 'Femenino' | 'Otro'
     };
+    
 
     this.pacienteService.insertarPaciente(paciente).subscribe({
       next: (mensaje) => {

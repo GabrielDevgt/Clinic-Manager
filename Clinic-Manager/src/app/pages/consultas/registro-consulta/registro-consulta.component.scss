@@ -1,0 +1,193 @@
+/* Fuentes locales (evitamos Google Fonts) */
+@font-face {
+    font-family: 'Quicksand';
+    src: local('Quicksand'), local('Quicksand-Regular');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Quicksand';
+    src: local('Quicksand Medium'), local('Quicksand-Medium');
+    font-weight: 500;
+    font-style: normal;
+}
+
+/* Paleta de colores suaves como nubes */
+:host {
+    --azul-claro: #e6f2ff;
+    --azul-medio: #b3d9ff;
+    --azul-oscuro: #80bfff;
+    --azul-profundo: #25425f;
+    --sombra-suave: 0 4px 12px rgba(77, 166, 255, 0.15);
+    --borde-redondeado: 8px;
+    --transicion: all 0.3s ease;
+}
+
+.contenedor-clinico {
+    max-width: 1200px;
+    margin: 2rem auto;
+    background-color: white;
+    border-radius: var(--borde-redondeado);
+    box-shadow: var(--sombra-suave);
+    overflow: hidden;
+    font-family: 'Quicksand', sans-serif;
+}
+
+.cabecera-clinica {
+    padding: 1.5rem 2rem;
+    background-color: var(--azul-claro);
+    position: relative;
+}
+
+.cabecera-clinica h1 {
+    color: var(--azul-profundo);
+    font-weight: 500;
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.decoracion-azul {
+    height: 4px;
+    background: linear-gradient(90deg, var(--azul-medio), var(--azul-profundo));
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.formulario-clinico {
+    padding: 2rem;
+}
+
+.fila-formulario {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.grupo-campo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.grupo-campo.direccion-completa {
+    flex: 2;
+}
+
+label {
+    font-size: 0.875rem;
+    color: var(--azul-profundo);
+    font-weight: 500;
+}
+
+input, select {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--azul-medio);
+    border-radius: var(--borde-redondeado);
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.875rem;
+    transition: var(--transicion);
+    background-color: var(--azul-claro);
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--azul-profundo);
+    box-shadow: 0 0 0 2px rgba(77, 166, 255, 0.2);
+}
+
+input::placeholder {
+    color: #a3c7e6;
+    opacity: 1;
+}
+
+select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234da6ff'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1rem;
+}
+
+.contenedor-botones {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn-guardar, .btn-cancelar, .btn-guardar2 {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: var(--borde-redondeado);
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 500;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: var(--transicion);
+}
+
+.btn-guardar {
+    background-color: var(--azul-profundo);
+    color: white;
+    font-weight: bold;
+
+}
+
+.btn-guardar:hover {
+    background-color: var(--azul-oscuro);
+    color: #25425f;
+    font-weight: bold;
+}
+
+.btn-guardar2{
+    background-color: #94e694;
+    color: rgb(11, 96, 112);
+    font-weight: bold;
+
+}
+.btn-guardar2:hover {
+    background-color: #1ce480;
+    color: #0a0a0a;
+    font-weight: bold;
+}
+
+.btn-cancelar {
+    background-color: white;
+    color: var(--azul-profundo);
+    font-weight: bold;
+
+    border: 1px solid var(--azul-medio);
+}
+
+.btn-cancelar:hover {
+    background-color: #a80e0e;
+    color: #e7f0fa;
+    font-weight: bold;
+    border: 1px solid var(--azul-medio);
+
+}
+
+/* Validación */
+input:required:invalid {
+    border-left: 3px solid #0b6b86;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .fila-formulario {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .contenedor-botones {
+        flex-direction: column;
+    }
+    
+    .btn-guardar, .btn-cancelar {
+        width: 100%;
+    }
+}

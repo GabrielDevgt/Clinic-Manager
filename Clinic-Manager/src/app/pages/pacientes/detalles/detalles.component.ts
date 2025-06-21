@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { PacienteService } from '../../../services/paciente.service';
 import { Paciente } from '../../../models/paciente.model';
 import { switchMap } from 'rxjs/operators';
@@ -8,7 +8,7 @@ import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-detalles',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './detalles.component.html',
   styleUrl: './detalles.component.scss'
 })
@@ -79,16 +79,15 @@ ngOnInit(): void {
     const años = Math.floor(meses / 12);
     return `${años} ${años === 1 ? 'año' : 'años'}`;
   }
+volverALista(): void {
+  this.router.navigate(['/pacientes']); // Asumiendo que esta es tu ruta de lista
+}
 
-  volverALista(): void {
-    this.router.navigate(['/pacientes']);
+editarPaciente(): void {
+  if (this.paciente) {
+    this.router.navigate(['/pacientes/editar-paciente', this.paciente.id_paciente]);
   }
-
-  editarPaciente(): void {
-    if (this.paciente) {
-      this.router.navigate(['/pacientes/editar', this.paciente.id_paciente]);
-    }
-  }
+}
 
   verHistorial(): void {
     if (this.paciente) {

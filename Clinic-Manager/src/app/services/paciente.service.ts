@@ -127,4 +127,38 @@ export class PacienteService {
   }
 
   
+/**
+ * Actualiza un paciente existente en la base de datos
+ * @param id ID del paciente a actualizar
+ * @param paciente Datos actualizados del paciente
+ * @returns Observable con mensaje de confirmación
+ */
+actualizarPaciente(id: number, paciente: PacienteInput): Observable<string> {
+  return from(
+    invoke<string>('actualizar_paciente', {
+      id,
+      nombre1: paciente.nombre_1,
+      nombre2: paciente.nombre_2,
+      nombre3: paciente.nombre_3 || null,
+      apellido1: paciente.apellido_1,
+      apellido2: paciente.apellido_2 || null,
+      apellidoCasado: paciente.apellido_casado || null,
+      fechaNacimiento: paciente.fecha_nacimiento,
+      direccion: paciente.direccion,
+      telefono: paciente.telefono,
+      genero: paciente.genero
+    })
+    .then(resultado => {
+      console.log('Paciente actualizado:', resultado);
+      return resultado;
+    })
+    .catch(error => {
+      console.error('Error actualizando paciente:', error);
+      throw error;
+    })
+  );
+}
+
+
+
 }
