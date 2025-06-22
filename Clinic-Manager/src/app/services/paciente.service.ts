@@ -114,7 +114,7 @@ export class PacienteService {
  */
   obtenerPacientePorId(id: number): Observable<Paciente> {
     return from(
-      invoke<Paciente>('obtener_paciente_por_id', { id })
+      invoke<Paciente>('obtener_pacientes_por_id', { id })
         .then(paciente => {
           console.log('Paciente obtenido:', paciente);
           return paciente;

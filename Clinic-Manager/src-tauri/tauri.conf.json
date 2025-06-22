@@ -13,9 +13,9 @@
     "windows": [
       {
         "title": "Policlínica-Los-Angeles",
-        "width": 1200,
+        "width": 1300,
         "height": 800,
-        "minWidth": 600,
+        "minWidth": 800,
         "minHeight": 400,
         "maxWidth": 1920,
         "maxHeight": 1080,

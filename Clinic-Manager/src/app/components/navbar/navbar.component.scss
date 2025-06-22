@@ -1,9 +1,9 @@
 // Variables de colores - Paleta azul elegante
-$primary-blue: #1e3a8a;        // Azul profundo
-$secondary-blue: #3b82f6;      // Azul medio
-$light-blue: #e0f2fe;          // Azul muy claro
-$accent-blue: #0ea5e9;         // Azul vibrante
-$dark-blue: #0f172a;           // Azul muy oscuro
+$primary-blue: #1e3a8a;       // Azul profundo
+$secondary-blue: #3b82f6;     // Azul medio
+$light-blue: #e0f2fe;         // Azul muy claro
+$accent-blue: #0ea5e9;        // Azul vibrante
+$dark-blue: #0f172a;          // Azul muy oscuro
 $white: #ffffff;
 $gray-light: #f8fafc;
 $gray-medium: #64748b;
@@ -33,35 +33,69 @@ $transition: all 0.3s ease;
   font-family: $font-primary;
   position: sticky;
   top: 0;
-  z-index: 1000;
-  backdrop-filter: blur(10px);
+  z-index: 100;
+  backdrop-filter: blur(10px); // Efecto de cristal esmerilado
 
-  @media (max-width: 768px) {
-    padding: 0 1rem;
-    flex-wrap: wrap;
-    height: auto;
-    min-height: $navbar-height;
+  // Media query general para pantallas más pequeñas (activará el responsive para Tauri minWidth: 800)
+  // Podemos ajustar este 750px si necesitas que el cambio sea ANTES de los 800px
+  @media (max-width: 800px) { // Considera este el breakpoint donde las cosas se compactan
+    padding: 0 1rem; // Reduce el padding horizontal
+    height: auto;    // Permite que la altura se ajuste si los elementos se envuelven
+    min-height: $navbar-height; // Mantén la altura mínima
+    flex-wrap: wrap; // Permite que los elementos se envuelvan a la siguiente línea
+    justify-content: center; // Centra los elementos cuando se envuelven
+    text-align: center; // Centra el texto por defecto
+  }
+
+  // Si quieres que el navbar se apile completamente a un tamaño aún más pequeño (ej. móvil puro)
+  @media (max-width: 500px) {
+    flex-direction: column; // Apila los elementos verticalmente
+    align-items: center;    // Centra los elementos apilados
+    padding: 1rem 1rem;     // Más padding vertical
   }
 }
+
+.navbar-logo {
+  flex-grow: 1; // Permite que el logo ocupe el espacio disponible
+  display: flex;
+  align-items: center;
+  color: $primary-blue;
+  font-size: 1.5rem;
+  font-weight: $font-weight-semibold;
+  
+  @media (max-width: 750px) {
+    flex-grow: 0; // No crece tanto en pantallas pequeñas
+    margin-right: 1rem; // Espacio a la derecha antes del colapso del doctor info
+  }
+  @media (max-width: 500px) {
+    order: 1; // Primero el logo
+    width: 100%;
+    justify-content: center; // Centra el logo
+    margin-bottom: 0.5rem; // Pequeño margen inferior
+    margin-right: 0;
+  }
+}
+
 
 .navbar-buttons {
   display: flex;
   gap: 0.5rem;
   align-items: center;
 
-  @media (max-width: 768px) {
-    order: 3;
-    width: 100%;
-    justify-content: center;
-    margin-top: 1rem;
-    gap: 0.25rem;
+  @media (max-width: 800px) {
+    order: 3; // Mueve los botones a la última posición
+    width: 40%; // Ocupa todo el ancho
+    justify-content: center; // Centra los botones
+    margin-top: 1rem; // Espacio superior cuando están abajo
+    gap: 0.25rem; // Reduce el espacio entre botones
+    flex-wrap: wrap; // Asegura que los botones se envuelvan si no caben
   }
 
   button {
     background: $white;
     color: $primary-blue;
     border: 2px solid transparent;
-    padding: 0.75rem 1.5rem;
+    padding: 0.45rem 0.5rem;
     border-radius: $border-radius;
     font-family: $font-primary;
     font-weight: $font-weight-medium;
@@ -74,17 +108,24 @@ $transition: all 0.3s ease;
     align-items: center;
     gap: 0.5rem;
 
-    @media (max-width: 768px) {
-      padding: 0.5rem 0.75rem;
-      font-size: 0.75rem;
+    @media (max-width: 750px) {
+      padding: 0.5rem 0.75rem; // Reduce el padding de los botones
+      font-size: 0.75rem;      // Reduce el tamaño de la fuente
       gap: 0.25rem;
+      flex-grow: 1;            // Permite que los botones crezcan para llenar el espacio
+      min-width: 90px;         // Ancho mínimo para cada botón
     }
+
+    @media (max-width: 500px) {
+        margin: 0.25rem; // Pequeño margen para que no estén tan pegados
+    }
+
 
     .btn-icon {
       font-size: 1.1rem;
       transition: $transition;
 
-      @media (max-width: 768px) {
+      @media (max-width: 750px) {
         font-size: 1rem;
       }
     }
@@ -116,12 +157,18 @@ $transition: all 0.3s ease;
   color: $primary-blue;
   font-family: $font-primary;
 
-  @media (max-width: 768px) {
-    order: 2;
-    align-items: flex-start;
+  @media (max-width: 800px) {
+    order: 2; // Coloca la info del doctor en el medio
+    align-items: center; // Centra el texto
+    flex-grow: 0;        // No crece, solo ocupa el espacio necesario
+    margin: 0 0.5rem;    // Pequeño margen lateral para separarse
+  }
+  @media (max-width: 500px) {
+    width: 100%; // Ocupa todo el ancho si se apila
+    margin-bottom: 0.5rem; // Espacio inferior
   }
 
-  div {
+  div { // Para el nombre del doctor (ej. "Dr. [Nombre del Doctor]")
     font-weight: $font-weight-semibold;
     font-size: 1rem;
     margin-bottom: 0.125rem;
@@ -130,20 +177,22 @@ $transition: all 0.3s ease;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 
-    @media (max-width: 768px) {
-      font-size: 0.875rem;
+    @media (max-width: 750px) { // Aquí ocultamos el nombre del doctor
+      display: none; // ¡Esto es clave! Oculta completamente el nombre del doctor.
     }
   }
 
-  small {
+  small { // Para la especialidad del doctor (ej. "Médico Especialista")
     font-size: 0.75rem;
     color: $gray-medium;
     font-weight: $font-weight-normal;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-
-    @media (max-width: 768px) {
-      font-size: 0.625rem;
+    
+    @media (max-width: 800px) { // Oculta también la especialidad
+      display: none; // ¡Esto es clave! Oculta completamente la especialidad.
     }
+    // Si quisieras dejar solo un ícono o algo que represente al doctor, esta es la zona
+    // Podrías añadir un `span` aquí con un icono y mostrarlo en su lugar.
   }
 }

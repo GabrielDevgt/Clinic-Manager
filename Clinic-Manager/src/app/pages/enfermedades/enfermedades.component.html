@@ -1,0 +1,77 @@
+<div class="container">
+  <h2>Enfermedades</h2>
+
+  <div class="form-container">
+    <div class="form-field">
+      <label for="nombreEnfermedad">Nombre</label>
+      <input id="nombreEnfermedad" [(ngModel)]="nuevaEnfermedad.nombre" 
+             placeholder="Nombre de la enfermedad" required>
+    </div>
+    
+    <div class="form-field">
+      <label for="categoriaEnfermedad">Categoría</label>
+<select id="categoriaEnfermedad" [(ngModel)]="nuevaEnfermedad.id_categoria_enfermedades">
+  <option [value]="null">-- Sin categoría --</option>
+  <option *ngFor="let cat of categorias" [value]="cat.id_categoria_enfermedades">
+    {{ cat.nombre_catenfermedades }}
+  </option>
+</select>
+    </div>
+
+    <div class="form-field checkbox-field">
+      <label for="esCronica">
+        <input type="checkbox" id="esCronica" [(ngModel)]="nuevaEnfermedad.es_cronica">
+        Crónica
+      </label>
+    </div>
+    
+    <button (click)="agregarEnfermedad()">Agregar</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Categoría</th>
+        <th>Tipo</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let enf of enfermedades">
+        <td *ngIf="editandoId !== enf.id_enfermedad">{{ enf.nombre }}</td>
+        <td *ngIf="editandoId !== enf.id_enfermedad">
+          {{ obtenerNombreCategoria(enf.id_categoria_enfermedades) }}
+        </td>
+        <td *ngIf="editandoId !== enf.id_enfermedad">
+          {{ enf.es_cronica ? 'Crónica' : 'Aguda' }}
+        </td>
+        
+        <td *ngIf="editandoId === enf.id_enfermedad">
+          <input [(ngModel)]="enfermedadEditando.nombre" placeholder="Nombre">
+        </td>
+        <td *ngIf="editandoId === enf.id_enfermedad">
+          <select [(ngModel)]="enfermedadEditando.id_categoria_enfermedades">
+            <option [value]="null">-- Sin categoría --</option>
+            <option *ngFor="let cat of categorias" [value]="cat.id_categoria_enfermedades">
+              {{ cat.nombre_catenfermedades }}
+            </option>
+          </select>
+        </td>
+        <td *ngIf="editandoId === enf.id_enfermedad">
+          <label>
+            <input type="checkbox" [(ngModel)]="enfermedadEditando.es_cronica">
+            Crónica
+          </label>
+        </td>
+        
+        <td>
+          <button *ngIf="editandoId !== enf.id_enfermedad" (click)="iniciarEdicion(enf)">Editar</button>
+          <button *ngIf="editandoId === enf.id_enfermedad" (click)="guardarEdicion()" class="btn-save">Guardar</button>
+          <button *ngIf="editandoId === enf.id_enfermedad" (click)="cancelarEdicion()" class="btn-cancel">Cancelar</button>
+          <button (click)="eliminarEnfermedad(enf.id_enfermedad)" class="btn-delete">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

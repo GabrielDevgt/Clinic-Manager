@@ -40,7 +40,7 @@
     position: relative;
 }
 
-.cabecera-clinica h1 {
+.cabecera-clinica h1.title {
     color: var(--azul-profundo);
     font-weight: 500;
     margin: 0;
@@ -64,6 +64,7 @@
     display: flex;
     gap: 1.5rem;
     margin-bottom: 1.5rem;
+    flex-wrap: wrap;
 }
 
 .grupo-campo {
@@ -71,10 +72,11 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    min-width: 200px;
 }
 
-.grupo-campo.direccion-completa {
-    flex: 2;
+.grupo-campo.full-width {
+    flex: 100%;
 }
 
 label {
@@ -112,6 +114,32 @@ select {
     background-size: 1rem;
 }
 
+/* Estilos para la fila de signos vitales */
+.fila-signos-vitales {
+    .grupo-campo {
+        flex: 1;
+        min-width: 150px;
+    }
+}
+
+/* Mensajes de carga y error */
+.mensaje-carga, .mensaje-error {
+    padding: 0.5rem;
+    border-radius: var(--borde-redondeado);
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+.mensaje-carga {
+    background-color: #fff8e6;
+    color: #8a6d3b;
+}
+
+.mensaje-error {
+    background-color: #fdecea;
+    color: #d32f2f;
+}
+
 .contenedor-botones {
     display: flex;
     justify-content: flex-end;
@@ -119,7 +147,7 @@ select {
     margin-top: 2rem;
 }
 
-.btn-guardar, .btn-cancelar, .btn-guardar2 {
+.btn {
     padding: 0.75rem 1.5rem;
     border: none;
     border-radius: var(--borde-redondeado);
@@ -134,45 +162,28 @@ select {
     background-color: var(--azul-profundo);
     color: white;
     font-weight: bold;
-
 }
 
 .btn-guardar:hover {
     background-color: var(--azul-oscuro);
     color: #25425f;
-    font-weight: bold;
-}
-
-.btn-guardar2{
-    background-color: #94e694;
-    color: rgb(11, 96, 112);
-    font-weight: bold;
-
-}
-.btn-guardar2:hover {
-    background-color: #1ce480;
-    color: #0a0a0a;
-    font-weight: bold;
 }
 
 .btn-cancelar {
     background-color: white;
     color: var(--azul-profundo);
-    font-weight: bold;
-
     border: 1px solid var(--azul-medio);
+    font-weight: bold;
 }
 
 .btn-cancelar:hover {
     background-color: #a80e0e;
     color: #e7f0fa;
-    font-weight: bold;
-    border: 1px solid var(--azul-medio);
-
+    border-color: #a80e0e;
 }
 
 /* Validación */
-input:required:invalid {
+input:required:invalid, select:required:invalid {
     border-left: 3px solid #0b6b86;
 }
 
@@ -183,11 +194,15 @@ input:required:invalid {
         gap: 1rem;
     }
     
+    .grupo-campo {
+        min-width: 100%;
+    }
+    
     .contenedor-botones {
         flex-direction: column;
     }
     
-    .btn-guardar, .btn-cancelar {
+    .btn {
         width: 100%;
     }
 }
