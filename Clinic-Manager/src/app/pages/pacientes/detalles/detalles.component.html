@@ -9,10 +9,10 @@
             <button class="btn-editar" (click)="editarPaciente()">📑 Editar Paciente</button>
             <!-- <button class="btn-historial" (click)="verHistorial()">📓 Ver Historial Médico</button> -->
         </div>
-        <div class="paciente-header">
-            <h2>{{ obtenerNombreCompleto() }}</h2>
-            <span class="id-paciente">#{{ paciente.id_paciente }}</span>
-        </div>
+<div class="paciente-header">
+    <h2>{{ obtenerNombreCompleto() }}</h2>
+    <span class="id-paciente" *ngIf="pacienteId">#{{ pacienteId }}</span>
+</div>
 
         <div class="paciente-body">
             <div class="row">

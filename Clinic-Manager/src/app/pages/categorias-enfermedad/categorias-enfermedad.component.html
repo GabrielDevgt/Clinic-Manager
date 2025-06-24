@@ -1,0 +1,46 @@
+<div class="container">
+  <h2>Categorías de Enfermedades</h2>
+
+  <!-- Formulario para agregar -->
+  <div class="form-group">
+    <input 
+      type="text" 
+      [(ngModel)]="nuevaCategoriaNombre" 
+      placeholder="Nombre de la categoría"
+      class="form-control"
+    >
+    <button (click)="agregarCategoria()" class="btn btn-primary">
+      Agregar Categoría
+    </button>
+  </div>
+
+  <!-- Lista de categorías -->
+  <div class="categorias-list">
+    <div *ngFor="let categoria of categorias" class="categoria-item">
+      <div *ngIf="editandoId !== categoria.id_categoria_enfermedades">
+        {{ categoria.nombre_catenfermedades }}
+        <button (click)="iniciarEdicion(categoria)" class="btn btn-edit">
+          Editar
+        </button>
+        <button (click)="eliminarCategoria(categoria.id_categoria_enfermedades)" class="btn btn-delete">
+          Eliminar
+        </button>
+      </div>
+
+      <!-- Formulario de edición -->
+      <div *ngIf="editandoId === categoria.id_categoria_enfermedades" class="edit-form">
+        <input 
+          type="text" 
+          [(ngModel)]="editandoNombre"
+          class="form-control"
+        >
+        <button (click)="guardarEdicion()" class="btn btn-save">
+          Guardar
+        </button>
+        <button (click)="cancelarEdicion()" class="btn btn-cancel">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

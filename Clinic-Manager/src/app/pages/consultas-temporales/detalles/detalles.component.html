@@ -1,0 +1,61 @@
+<!-- <div class="detalle-container">
+    <div class="header">
+        <button class="btn-volver" (click)="volverALista()">⬅️ Volver</button>
+        <h1>Detalles de Consulta</h1>
+    </div>
+
+    <div class="consulta-card" *ngIf="consulta; else loading">
+
+        <div class="consulta-header">
+            <h2>{{ obtenerNombrePaciente() }}</h2>
+            <span class="fecha-consulta">{{ formatearFecha(consulta.fecha_consulta) }}</span>
+        </div>
+
+        <div class="consulta-body">
+            <div class="row">
+                <div class="col">
+                    <h3>Información Básica</h3>
+                    <p><strong>Motivo de Consulta:</strong> {{ consulta.motivo_consulta }}</p>
+                    <p><strong>Antecedentes:</strong> {{ consulta.antecedente || 'No registrados' }}</p>
+                    <p><strong>Enfermedades:</strong> {{ consulta.enfermedades || 'No registradas' }}</p>
+                </div>
+
+                <div class="col">
+                    <h3>Signos Vitales</h3>
+                    <p><strong>Peso:</strong> {{ formatearCampo(consulta.peso, 'peso') }}</p>
+                    <p><strong>Altura:</strong> {{ formatearCampo(consulta.altura, 'altura') }}</p>
+                    <p><strong>Presión Arterial:</strong> {{ consulta.presion_arterial || 'N/A' }}</p>
+                    <p><strong>Frecuencia Cardíaca:</strong> {{ formatearCampo(consulta.frecuencia_cardiaca, 'frecuencia_cardiaca') }}</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <h3>Exámenes</h3>
+                    <p><strong>Laboratorio:</strong> {{ consulta.laboratorio || 'No especificado' }}</p>
+                    <p><strong>Examen Físico:</strong> {{ consulta.examen_fisico || 'No especificado' }}</p>
+                </div>
+
+                <div class="col">
+                    <h3>Diagnóstico y Tratamiento</h3>
+                    <p><strong>Diagnóstico:</strong> {{ consulta.diagnostico || 'No especificado' }}</p>
+                    <p><strong>Plan Terapéutico:</strong> {{ consulta.plan_terapeutico || 'No especificado' }}</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <h3>Seguimiento</h3>
+                    <p><strong>Próxima Cita:</strong> {{ formatearFecha(consulta.proxima_cita) || 'No programada' }}</p> -->
+                <!-- </div> -->
+            <!-- </div> -->
+        <!-- </div> -->
+    <!-- </div> -->
+
+    <ng-template #loading>
+        <div class="loading-container">
+            <p *ngIf="!error">Cargando información de la consulta...</p>
+            <p class="error-message" *ngIf="error">{{ error }}</p>
+        </div>
+    </ng-template>
+<!-- </div> -->
