@@ -1,7 +1,6 @@
 
 
 //Aquí definimos cómo se ve un paciente
-use serde::{Serialize, Deserialize};
 
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct Paciente {

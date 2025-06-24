@@ -17,7 +17,7 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             api::paciente::insertar_paciente, //para el formulario de insertado
             api::paciente::obtener_pacientes, //para la tabla general 
-            api::paciente::obtener_pacientes_por_id, //para la busqueda
+            api::paciente::obtener_paciente_por_id, //para la busqueda
             api::paciente::actualizar_paciente,  //para actualizar paciente
             // api::consultatemporal::crear_consulta_temporal, //para crear consulta
             // api::consultatemporal::obtener_consultas_temporales, //para la tabla de consulta que esta fallando

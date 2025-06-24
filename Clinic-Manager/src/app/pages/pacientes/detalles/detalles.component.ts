@@ -12,10 +12,11 @@ import { switchMap } from 'rxjs/operators';
   templateUrl: './detalles.component.html',
   styleUrl: './detalles.component.scss'
 })
-export class DetallesComponent implements OnInit{
+export class DetallesComponent implements OnInit {
   paciente: Paciente | null = null;
   error: string | null = null;
   cargando = true;
+  pacienteId: number | null = null; // <- Añade esta propiedad
 
   constructor(
     private route: ActivatedRoute,
@@ -23,23 +24,25 @@ export class DetallesComponent implements OnInit{
     private pacienteService: PacienteService
   ) { }
 
-ngOnInit(): void {
-  this.route.paramMap.pipe(
-    switchMap(params => {
-      const id = Number(params.get('id'));
-      return this.pacienteService.obtenerPacientePorId(id);
-    })
-  ).subscribe({
-    next: (paciente) => {
-      this.paciente = paciente;
-      this.cargando = false;
-    },
-    error: (err) => {
-      this.error = 'Error al cargar el paciente: ' + err;
-      this.cargando = false;
-    }
-  });
-}
+  ngOnInit(): void {
+    this.route.paramMap.pipe(
+      switchMap(params => {
+        this.pacienteId = Number(params.get('id')); // <- Guarda el ID aquí
+        return this.pacienteService.obtenerPacientePorId(this.pacienteId);
+      })
+    ).subscribe({
+      next: (paciente) => {
+        console.log('Datos del paciente recibidos:', paciente); // <- Debug
+        this.paciente = paciente;
+        this.cargando = false;
+      },
+      error: (err) => {
+        console.error('Error al cargar paciente:', err); // <- Debug
+        this.error = 'Error al cargar el paciente: ' + err;
+        this.cargando = false;
+      }
+    });
+  }
 
   obtenerNombreCompleto(): string {
     if (!this.paciente) return '';
@@ -84,8 +87,11 @@ volverALista(): void {
 }
 
 editarPaciente(): void {
-  if (this.paciente) {
-    this.router.navigate(['/pacientes/editar-paciente', this.paciente.id_paciente]);
+  if (this.paciente && this.paciente.id_paciente) { // Verifica ambos
+    console.log('ID para editar:', this.paciente.id_paciente); // Debug
+    this.router.navigate(['pacientes', 'editar-paciente', this.paciente.id_paciente]);
+  } else {
+    console.error('No se puede editar: paciente o ID no definido');
   }
 }
 

@@ -27,12 +27,10 @@ pub fn obtener_pacientes() -> Result<Vec<Paciente>, String> {
 }
 
 
-
 #[command]
-pub fn obtener_pacientes_por_id(id: i32) -> Result<Vec<Paciente>, String> {
-    paciente::obtener_paciente_por_id(id).map(|p| vec![p])
+pub fn obtener_paciente_por_id(id: i32) -> Result<Paciente, String> {
+    paciente::obtener_paciente_por_id(id)
 }
-
 #[command]
 pub fn actualizar_paciente(
     id: i32,
