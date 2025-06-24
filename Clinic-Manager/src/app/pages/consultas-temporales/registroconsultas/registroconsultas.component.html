@@ -1,11 +1,11 @@
-<!-- <div class="contenedor-clinico">
+<div class="contenedor-clinico">
   <header class="cabecera-clinica">
     <h1 class="title">Registro de Consulta Temporal</h1>
     <div class="decoracion-azul"></div>
-  <!-- </header> -->
+ </header> 
 
-  <!-- <form class="formulario-clinico" (submit)="registrarConsulta($event)"> -->
-    <!-- Sección Paciente -->
+   <form class="formulario-clinico" >
+     Sección Paciente 
     <div class="fila-formulario">
       <div class="grupo-campo">
         <label for="id_paciente">Paciente *</label>
@@ -18,6 +18,10 @@
           </option>
         </select>
       </div>
+        <div class="grupo-campo">
+        <label for="fecha_consulta">Fecha de la Consulta *</label>
+        <input type="date" id="fecha_consulta" name="fecha_consulta" [value]="fechaHoy" required>
+      </div>  
     </div>
 
     <!-- Sección Información Básica -->
@@ -25,13 +29,6 @@
       <div class="grupo-campo full-width">
         <label for="motivo_consulta">Motivo de la Consulta *</label>
         <textarea id="motivo_consulta" name="motivo_consulta" required placeholder="Describa el motivo de la consulta"></textarea>
-      </div>
-    </div>
-
-    <div class="fila-formulario">
-      <div class="grupo-campo">
-        <label for="fecha_consulta">Fecha de la Consulta *</label>
-        <input type="date" id="fecha_consulta" name="fecha_consulta" [value]="fechaHoy" required>
       </div>
     </div>
 
@@ -57,14 +54,11 @@
 
     <!-- Sección Historial Médico -->
     <div class="fila-formulario">
-      <div class="grupo-campo full-width">
+      <div class="grupo-campo">
         <label for="antecedente">Antecedentes Médicos</label>
         <textarea id="antecedente" name="antecedente" placeholder="Describa los antecedentes médicos relevantes"></textarea>
       </div>
-    </div>
-
-    <div class="fila-formulario">
-      <div class="grupo-campo full-width">
+       <div class="grupo-campo">
         <label for="enfermedades">Enfermedades Actuales</label>
         <textarea id="enfermedades" name="enfermedades" placeholder="Describa las enfermedades actuales"></textarea>
       </div>
@@ -102,16 +96,17 @@
 
     <!-- Próxima Cita -->
     <div class="fila-formulario">
-      <div class="grupo-campo">
+      <div class="grupo-campocita">
         <label for="proxima_cita">Próxima Cita *</label>
         <input type="date" id="proxima_cita" name="proxima_cita" required>
       </div>
+          <div class="contenedor-botones">
+      <button type="submit" class="btn btn-guardar">Guardar Consulta</button>
+     <button type="button" class="btn btn-cancelar" (click)="cancelarConsulta()">Cancelar</button> 
+    </div>
     </div>
 
-    <!-- Botones -->
-    <div class="contenedor-botones">
-      <button type="submit" class="btn btn-guardar">Guardar Consulta</button>
-      <!-- <button type="button" class="btn btn-cancelar" (click)="cancelarConsulta()">Cancelar</button> -->
-    </div>
-  <!-- </form>
-</div> --> -->
+
+
+  </form>
+</div> 

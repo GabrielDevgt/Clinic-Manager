@@ -79,9 +79,9 @@ export class RegistroConsultaTemporalComponent implements OnInit {
 //     }
 //   });
 // }
-//   cancelarConsulta(): void {
-//     this.router.navigate(['/consultas-temporales']);
-//   }
+   cancelarConsulta(): void {
+     this.router.navigate(['consultas-temporales']);
+   }
 
 //   private toNullableNumber(value: FormDataEntryValue | null): number | null {
 //     if (!value) return null;

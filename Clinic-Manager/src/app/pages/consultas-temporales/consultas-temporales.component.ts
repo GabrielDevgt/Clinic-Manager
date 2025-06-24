@@ -115,7 +115,7 @@ export class ConsultasTemporalesComponent implements OnInit {
   }
 
   irANuevaConsulta(): void {
-    this.router.navigate(['/consultas-temporales/nueva']);
+    this.router.navigate(['consultas-temporales/registro']);
   }
 
   refrescar(): void {
