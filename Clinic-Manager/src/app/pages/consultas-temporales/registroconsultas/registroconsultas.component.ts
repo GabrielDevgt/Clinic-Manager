@@ -45,53 +45,54 @@ export class RegistroConsultaTemporalComponent implements OnInit {
     });
   }
 
-registrarConsulta(event: Event): void {
-  event.preventDefault();
-  const form = event.target as HTMLFormElement;
-  const formData = new FormData(form);
+// registrarConsulta(event: Event): void {
+//   event.preventDefault();
+//   const form = event.target as HTMLFormElement;
+//   const formData = new FormData(form);
 
-  // Objeto sin id_consulta (lo genera la BD)
-  const consultaData = {
-    id_paciente: Number(formData.get('id_paciente')),
-    motivo_consulta: String(formData.get('motivo_consulta')),
-    fecha_consulta: String(formData.get('fecha_consulta')),
-    peso: this.toNullableNumber(formData.get('peso')),
-    altura: this.toNullableNumber(formData.get('altura')),
-    frecuencia_cardiaca: this.toNullableNumber(formData.get('frecuencia_cardiaca')),
-    presion_arterial: this.toNullableString(formData.get('presion_arterial')),
-    Antecedente: this.toNullableString(formData.get('antecedente')),
-    Enfermedades: this.toNullableString(formData.get('enfermedades')),
-    Laboratorio: this.toNullableString(formData.get('laboratorio')),
-    Examen_fisico: this.toNullableString(formData.get('examen_fisico')),
-    Diagnostico: this.toNullableString(formData.get('diagnostico')),
-    proxima_cita: String(formData.get('proxima_cita')),
-    Plan_terapeutico: this.toNullableString(formData.get('plan_terapeutico'))
-  };
+//   // Objeto sin id_consulta (lo genera la BD)
+//   const consultaData = {
+//     id_paciente: Number(formData.get('id_paciente')),
+//     motivo_consulta: String(formData.get('motivo_consulta')),
+//     fecha_consulta: String(formData.get('fecha_consulta')),
+//     peso: this.toNullableNumber(formData.get('peso')),
+//     altura: this.toNullableNumber(formData.get('altura')),
+//     frecuencia_cardiaca: this.toNullableNumber(formData.get('frecuencia_cardiaca')),
+//     presion_arterial: this.toNullableString(formData.get('presion_arterial')),
+//     Antecedente: this.toNullableString(formData.get('antecedente')),
+//     Enfermedades: this.toNullableString(formData.get('enfermedades')),
+//     Laboratorio: this.toNullableString(formData.get('laboratorio')),
+//     Examen_fisico: this.toNullableString(formData.get('examen_fisico')),
+//     Diagnostico: this.toNullableString(formData.get('diagnostico')),
+//     proxima_cita: String(formData.get('proxima_cita')),
+//     Plan_terapeutico: this.toNullableString(formData.get('plan_terapeutico'))
+//   };
 
-  this.consultaService.crearConsultaTemporal(consultaData).subscribe({
-    next: () => {
-      alert('Consulta registrada exitosamente');
-      this.router.navigate(['/consultas-temporales']);
-    },
-    error: err => {
-      alert('Error al registrar la consulta');
-      console.error(err);
-    }
-  });
-}
-  cancelarConsulta(): void {
-    this.router.navigate(['/consultas-temporales']);
-  }
+//   this.consultaService.crearConsultaTemporal(consultaData).subscribe({
+//     next: () => {
+//       alert('Consulta registrada exitosamente');
+//       this.router.navigate(['/consultas-temporales']);
+//     },
+//     error: err => {
+//       alert('Error al registrar la consulta');
+//       console.error(err);
+//     }
+//   });
+// }
+//   cancelarConsulta(): void {
+//     this.router.navigate(['/consultas-temporales']);
+//   }
 
-  private toNullableNumber(value: FormDataEntryValue | null): number | null {
-    if (!value) return null;
-    const val = Number(value);
-    return isNaN(val) ? null : val;
-  }
+//   private toNullableNumber(value: FormDataEntryValue | null): number | null {
+//     if (!value) return null;
+//     const val = Number(value);
+//     return isNaN(val) ? null : val;
+//   }
 
-  private toNullableString(value: FormDataEntryValue | null): string | null {
-    if (!value) return null;
-    const str = String(value).trim();
-    return str === '' ? null : str;
-  }
+//   private toNullableString(value: FormDataEntryValue | null): string | null {
+//     if (!value) return null;
+//     const str = String(value).trim();
+//     return str === '' ? null : str;
+//   }
+// }
 }

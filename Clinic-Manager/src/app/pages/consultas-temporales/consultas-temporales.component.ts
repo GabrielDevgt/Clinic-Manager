@@ -1,22 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { forkJoin } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { ConsultaTemporalService } from '../../services/consulta-temporal.service';
 import { PacienteService } from '../../services/paciente.service';
 import { ConsultaTemporal } from '../../models/consulta-temporal.model';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { Paciente } from '../../models/paciente.model';
 
 @Component({
   selector: 'app-consultas-temporales',
-  standalone: true, // Añadido para Angular 17+
-  imports: [FormsModule, CommonModule],
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './consultas-temporales.component.html',
-  styleUrl: './consultas-temporales.component.scss'
+  styleUrls: ['./consultas-temporales.component.scss']
 })
 export class ConsultasTemporalesComponent implements OnInit {
   consultas: ConsultaTemporal[] = [];
   consultasFiltradas: ConsultaTemporal[] = [];
-  pacientes: any[] = [];
+  pacientes: Paciente[] = [];
   cargando = true;
   error: string | null = null;
   terminoBusqueda = '';
@@ -35,49 +37,50 @@ export class ConsultasTemporalesComponent implements OnInit {
     this.cargando = true;
     this.error = null;
 
-    this.pacienteService.obtenerPacientes().subscribe({
-      next: (pacientes) => {
+    forkJoin({
+      pacientes: this.pacienteService.obtenerPacientes(),
+      consultas: this.consultaService.obtenerTodas()
+    }).subscribe({
+      next: ({ pacientes, consultas }) => {
         this.pacientes = pacientes;
-        this.consultaService.obtenerConsultasTemporales().subscribe({
-          next: (consultas) => {
-            this.consultas = consultas;
-            this.consultasFiltradas = [...consultas];
-            this.cargando = false;
-          },
-          error: (err) => {
-            this.error = 'Error al cargar las consultas temporales.';
-            this.cargando = false;
-            console.error(err);
-          }
-        });
+        this.consultas = consultas;
+        this.consultasFiltradas = [...consultas];
+        this.cargando = false;
       },
       error: (err) => {
-        this.error = 'Error al cargar los pacientes.';
+        this.error = 'Error al cargar los datos. Por favor, intente nuevamente.';
         this.cargando = false;
-        console.error(err);
+        console.error('Error:', err);
       }
     });
   }
 
-  onSearchInput(event: any): void {
-    this.terminoBusqueda = event.target.value.toLowerCase();
+  onSearchInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.terminoBusqueda = input.value.toLowerCase();
     this.filtrarConsultas();
   }
 
   filtrarConsultas(): void {
-    if (!this.terminoBusqueda) {
+    if (!this.terminoBusqueda.trim()) {
       this.consultasFiltradas = [...this.consultas];
       return;
     }
 
     this.consultasFiltradas = this.consultas.filter(consulta => {
       const paciente = this.pacientes.find(p => p.id_paciente === consulta.id_paciente);
-      const nombrePaciente = paciente ? this.pacienteService.obtenerNombreCompleto(paciente).toLowerCase() : '';
-      return (
-        nombrePaciente.includes(this.terminoBusqueda) ||
-        consulta.motivo_consulta.toLowerCase().includes(this.terminoBusqueda) ||
-        this.formatearFecha(consulta.fecha_consulta).toLowerCase().includes(this.terminoBusqueda)
-      );
+      const nombrePaciente = paciente ? 
+        this.pacienteService.obtenerNombreCompleto(paciente).toLowerCase() : '';
+      
+      const camposBusqueda = [
+        nombrePaciente,
+        consulta.motivo_consulta.toLowerCase(),
+        this.formatearFecha(consulta.fecha_consulta).toLowerCase(),
+        consulta.diagnostico?.toLowerCase() || '',
+        consulta.antecedente?.toLowerCase() || ''
+      ];
+
+      return camposBusqueda.some(campo => campo.includes(this.terminoBusqueda));
     });
   }
 
@@ -88,35 +91,31 @@ export class ConsultasTemporalesComponent implements OnInit {
 
   formatearFecha(fecha: string): string {
     if (!fecha) return 'No especificada';
+    
     try {
-      return new Date(fecha).toLocaleDateString('es-GT', {
+      const fechaObj = new Date(fecha.includes('T') ? fecha : fecha.replace(' ', 'T'));
+      return fechaObj.toLocaleDateString('es-GT', {
         year: 'numeric',
         month: 'short',
-        day: '2-digit'
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit'
       });
     } catch {
       return fecha;
     }
   }
 
-  verDetalles(id: number | undefined): void {
-    if (id === undefined) {
-      console.error('ID de consulta no definido');
-      return;
-    }
-    this.router.navigate(['consultas-temporales/detalles', id]);
+  verDetalles(id: number): void {
+    this.router.navigate(['/consultas-temporales/detalles', id]);
   }
 
-  editarConsulta(id: number | undefined): void {
-    if (id === undefined) {
-      console.error('ID de consulta no definido');
-      return;
-    }
+  editarConsulta(id: number): void {
     this.router.navigate(['/consultas-temporales/editar', id]);
   }
 
   irANuevaConsulta(): void {
-    this.router.navigate(['/consultas-temporales/registro']);
+    this.router.navigate(['/consultas-temporales/nueva']);
   }
 
   refrescar(): void {
@@ -124,7 +123,6 @@ export class ConsultasTemporalesComponent implements OnInit {
   }
 
   trackByConsultaId(index: number, consulta: ConsultaTemporal): number {
-    // Asumimos que si es undefined, usamos -1 o algún valor que no existirá en la BD
-    return consulta.id_consulta ?? -1;
+    return consulta.id_consulta ?? index;
   }
 }

@@ -19,11 +19,11 @@ fn main() {
             api::paciente::obtener_pacientes, //para la tabla general 
             api::paciente::obtener_paciente_por_id, //para la busqueda
             api::paciente::actualizar_paciente,  //para actualizar paciente
-            // api::consultatemporal::crear_consulta_temporal, //para crear consulta
-            // api::consultatemporal::obtener_consultas_temporales, //para la tabla de consulta que esta fallando
-            // api::consultatemporal::obtener_consulta_temporal_por_id, // para busquedá de consulta fallando
-            // api::consultatemporal::actualizar_consulta_temporal, //prefiero de momento no usarlo pero puede funcionar
-            // api::consultatemporal::eliminar_consulta_temporal // prefiero de momento no usarlo pero puede funcionar 
+            api::consultatemporal::insertar_consulta_temporal, //para crear consulta
+            api::consultatemporal::obtener_consultas_temporales, //para la tabla de consulta que esta fallando
+            api::consultatemporal::obtener_consulta_temporal_por_id, // para busquedá de consulta fallando
+            api::consultatemporal::actualizar_consulta_temporal, //prefiero de momento no usarlo pero puede funcionar
+            api::consultatemporal::eliminar_consulta_temporal // prefiero de momento no usarlo pero puede funcionar 
      //============PAUSADAS TEMPORALMENTE================//
             // api::consulta::obtener_consultas, //pa
             // api::consulta::obtener_consulta_por_id,

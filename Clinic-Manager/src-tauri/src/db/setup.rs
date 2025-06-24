@@ -205,13 +205,13 @@ pub fn inicializar_bases_datos() -> Result<()> {
             altura              REAL,
             frecuencia_cardiaca INTEGER,
             presion_arterial    TEXT,
-            antecedente         INTEGER,
-            enfermedades        INTEGER,
-            laboratorio      INTEGER,
-            examen_fisico    INTEGER,
-            diagnostico      INTEGER,
+            antecedente         TEXT,
+            enfermedades        TEXT,
+            laboratorio      TEXT,
+            examen_fisico    TEXT,
+            diagnostico      TEXT,
             proxima_cita        TEXT NOT NULL,
-            plan_terapeutico INTEGER,
+            plan_terapeutico TEXT,
             FOREIGN KEY (id_paciente) REFERENCES paciente (id_paciente)
         );
 
