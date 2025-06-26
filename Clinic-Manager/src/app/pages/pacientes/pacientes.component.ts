@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
 import { Paciente } from '../../models/paciente.model';
@@ -18,30 +18,31 @@ export class PacientesComponent implements OnInit, OnDestroy {
   error: string | null = null;
   pacienteFiltrado: Paciente[] = [];
   terminoBusqueda = '';
- 
-
-
+  // Agrega estas propiedades a tu clase
+  currentPage = 1;
+  itemsPerPage = 10;
+  totalPages = 1;
   private destroy$ = new Subject<void>();
 
-  constructor(private pacienteService: PacienteService, private router: Router) { } 
-    // Navegación
+  constructor(private pacienteService: PacienteService, private router: Router, private cdr: ChangeDetectorRef) { }
+  // Navegación
   irANuevoPaciente() {
     this.router.navigate(['/pacientes/nuevo']);
-  
-}
+
+  }
 
   ngOnInit(): void {
     this.cargarPacientes();
   }
-   
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
 
-verDetalles(idPaciente: number): void {
+  verDetalles(idPaciente: number): void {
     this.router.navigate(['/pacientes/detalle', idPaciente]);
-}
+  }
 
 
   /**
@@ -49,85 +50,125 @@ verDetalles(idPaciente: number): void {
  * @param fechaNacimiento Fecha de nacimiento en formato string (YYYY-MM-DD)
  * @returns Edad en formato 'X años' o 'Y meses' o 'N/A' si no hay fecha
  */
-calcularEdad(fechaNacimiento?: string): string {
-  if (!fechaNacimiento) return 'N/A';
-  
-  try {
-    const fechaNac = new Date(fechaNacimiento);
-    const hoy = new Date();
-    
-    // Validar que la fecha sea válida
-    if (isNaN(fechaNac.getTime())) return 'N/A';
-    
-    // Calcular diferencia en meses
-    let meses = (hoy.getFullYear() - fechaNac.getFullYear()) * 12;
-    meses += hoy.getMonth() - fechaNac.getMonth();
-    
-    // Ajustar si el día actual es anterior al día de nacimiento
-    if (hoy.getDate() < fechaNac.getDate()) {
-      meses--;
+  calcularEdad(fechaNacimiento?: string): string {
+    if (!fechaNacimiento) return 'N/A';
+
+    try {
+      const fechaNac = new Date(fechaNacimiento);
+      const hoy = new Date();
+
+      // Validar que la fecha sea válida
+      if (isNaN(fechaNac.getTime())) return 'N/A';
+
+      // Calcular diferencia en meses
+      let meses = (hoy.getFullYear() - fechaNac.getFullYear()) * 12;
+      meses += hoy.getMonth() - fechaNac.getMonth();
+
+      // Ajustar si el día actual es anterior al día de nacimiento
+      if (hoy.getDate() < fechaNac.getDate()) {
+        meses--;
+      }
+
+      // Si es menor a 24 meses (2 años), mostrar en meses
+      if (meses < 24) {
+        return meses <= 0 ? 'Recién nacido' : `${meses} ${meses === 1 ? 'mes' : 'meses'}`;
+      }
+
+      // Para mayores de 2 años, mostrar en años
+      const años = Math.floor(meses / 12);
+      return `${años} ${años === 1 ? 'año' : 'años'}`;
+    } catch (error) {
+      console.error('Error calculando edad:', error);
+      return 'N/A';
     }
-    
-    // Si es menor a 24 meses (2 años), mostrar en meses
-    if (meses < 24) {
-      return meses <= 0 ? 'Recién nacido' : `${meses} ${meses === 1 ? 'mes' : 'meses'}`;
-    }
-    
-    // Para mayores de 2 años, mostrar en años
-    const años = Math.floor(meses / 12);
-    return `${años} ${años === 1 ? 'año' : 'años'}`;
-  } catch (error) {
-    console.error('Error calculando edad:', error);
-    return 'N/A';
   }
-}
   /**
    * Carga la lista de pacientes desde la base de datos
    */
-  cargarPacientes(): void {
-    this.cargando = true;
-    this.error = null;
+cargarPacientes(): void {
+  this.cargando = true;
+  this.error = null;
 
-    this.pacienteService.obtenerPacientes()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (pacientes) => {
-          this.pacientes = pacientes;
-          this.pacienteFiltrado = [...pacientes];
-          this.cargando = false;
-          console.log(`Se cargaron ${pacientes.length} pacientes`);
-        },
-        error: (error) => {
-          this.error = 'Error al cargar los pacientes: ' + error;
-          this.cargando = false;
-          console.error('Error cargando pacientes:', error);
-        }
-      });
-  }
+  this.pacienteService.obtenerPacientes()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe({
+      next: (pacientes) => {
+        this.pacientes = pacientes;
+        this.pacienteFiltrado = [...pacientes];
+        this.calculateTotalPages(); // Añadir esta línea
+        this.cargando = false;
+        console.log(`Se cargaron ${pacientes.length} pacientes`);
+      },
+      error: (error) => {
+        this.error = 'Error al cargar los pacientes: ' + error;
+        this.cargando = false;
+        console.error('Error cargando pacientes:', error);
+      }
+    });
+}
 
   /**
    * Filtra pacientes por término de búsqueda
    * @param termino Término de búsqueda
    */
-  filtrarPacientes(termino: string): void {
-    this.terminoBusqueda = termino.toLowerCase();
-    
-    if (!this.terminoBusqueda.trim()) {
-      this.pacienteFiltrado = [...this.pacientes];
-      return;
-    }
-
+  // Modifica el método filtrarPacientes para calcular el total de páginas
+filtrarPacientes(termino: string): void {
+  this.terminoBusqueda = termino.toLowerCase();
+  this.currentPage = 1; // Resetear a la primera página al buscar
+  
+  if (!this.terminoBusqueda.trim()) {
+    this.pacienteFiltrado = [...this.pacientes];
+  } else {
     this.pacienteFiltrado = this.pacientes.filter(paciente => {
       const nombreCompleto = this.pacienteService.obtenerNombreCompleto(paciente).toLowerCase();
-      const telefono = paciente.telefono.toLowerCase();
-      const direccion = paciente.direccion.toLowerCase();
+      const telefono = paciente.telefono?.toLowerCase() || '';
+      const direccion = paciente.direccion?.toLowerCase() || '';
       
       return nombreCompleto.includes(this.terminoBusqueda) ||
              telefono.includes(this.terminoBusqueda) ||
              direccion.includes(this.terminoBusqueda);
     });
   }
+  
+  this.calculateTotalPages();
+}
+calculateTotalPages(): void {
+  this.totalPages = Math.ceil(this.pacienteFiltrado.length / this.itemsPerPage);
+  if (this.totalPages === 0) this.totalPages = 1;
+  
+  // Asegurarnos que currentPage no exceda el total de páginas
+  if (this.currentPage > this.totalPages) {
+    this.currentPage = this.totalPages;
+  }
+}
+// Método para obtener los pacientes de la página actual
+getPaginatedPatients(): Paciente[] {
+  const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+  const endIndex = startIndex + this.itemsPerPage;
+  // Creamos un nuevo array con slice para forzar la detección de cambios
+  return [...this.pacienteFiltrado.slice(startIndex, endIndex)];
+}
 
+nextPage(): void {
+  if (this.currentPage < this.totalPages) {
+    this.currentPage++;
+    this.cdr.detectChanges(); // Añade esta línea
+  }
+}
+
+prevPage(): void {
+  if (this.currentPage > 1) {
+    this.currentPage--;
+    this.cdr.detectChanges(); // Añade esta línea
+  }
+}
+
+goToPage(page: number): void {
+  if (page >= 1 && page <= this.totalPages) {
+    this.currentPage = page;
+    this.cdr.detectChanges(); // Añade esta línea
+  }
+}
   /**
    * Obtiene el nombre completo del paciente
    * @param paciente Objeto paciente
@@ -189,4 +230,6 @@ calcularEdad(fechaNacimiento?: string): string {
   trackByPacienteId(index: number, paciente: Paciente): number {
     return paciente.id_paciente;
   }
+
+
 }

@@ -85,7 +85,7 @@ export class DetalleConsultaComponent implements OnInit {
   }
 
   volverALista(): void {
-    this.router.navigate(['/consultas-temporales']);
+    this.router.navigate(['consultas']);
   }
 
   formatearFecha(fechaString?: string | null): string {
