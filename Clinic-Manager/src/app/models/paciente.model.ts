@@ -25,3 +25,4 @@
     telefono: string;
     genero: 'Masculino' | 'Femenino' | 'Otro';
   }
+  

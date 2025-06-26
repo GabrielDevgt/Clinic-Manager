@@ -35,11 +35,10 @@ $spacing-xl: 2rem;
 body {
     color: $gray-dark;
     line-height: 1.6;
-    background-color: $gray-light;
 }
 
 .container {
-    max-width: 1400px;
+    max-width: 1600px;
     margin: 0 auto;
     padding: $spacing-xl;
     background-color: $white;
@@ -92,6 +91,7 @@ body {
     display: flex;
     align-items: center;
     gap: $spacing-md;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 
     @media (max-width: 768px) {
         flex-direction: column;
@@ -211,7 +211,7 @@ body {
     background-color: $gray-light;
     color: $gray-dark;
     border: 1px solid #e2e8f0;
-
+font-family: 'Trebuchet MS', sans-serif;
     &:hover:not(:disabled) {
         background-color: #e2e8f0;
         border-color: $gray-medium;
@@ -226,15 +226,14 @@ body {
 
 .btn-accion {
     padding: 0.4rem 0.8rem;
-    border: 1px solid #e2e8f0;
+    border: 1px solid #182d49;
     background-color: $white;
     color: $gray-dark;
     border-radius: $border-radius-small;
     font-size: 0.8rem;
-    font-weight: $font-weight-medium;
+    font-family: 'Trebuchet MS', sans-serif;
     cursor: pointer;
     transition: $transition;
-
     &:hover {
         background-color: $secondary-blue;
         color: $white;
@@ -244,8 +243,8 @@ body {
     }
 
     &.btn-editar:hover {
-        background-color: #10b981;
-        border-color: #10b981;
+        background-color: #162a52;
+        border-color: #ffffff;
     }
 
     &.btn-historial:hover {
@@ -308,6 +307,7 @@ body {
 
 
 .toolbar {
+  font-family: 'Trebuchet MS', sans-serif;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -317,18 +317,19 @@ body {
 }
 
 .toolbar .contador-resultados {
-  color: #666;
+  color: #5c5c5c;
   font-size: 14px;
 }
 
 .toolbar .contador-resultados .highlight {
-  color: #333;
+  color: #1b30a4;
   font-weight: bold;
 }
 
 .tabla-container {
+  font-family: 'Trebuchet MS', sans-serif;
   overflow-x: auto;
-  background: white;
+  background: rgb(244, 250, 255);
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
@@ -338,7 +339,18 @@ body {
   border-collapse: collapse;
 }
 
-.tabla-consultas th,
+.tabla-consultas th{
+  background-color: #0b2944;
+  color: white;
+    padding: 12px 15px;
+    color: #ffffff;
+    font-size: 1rem;
+    letter-spacing: 0.2px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  font-family:Verdana, Geneva, Tahoma, sans-serif
+}
+
 .tabla-consultas td {
   padding: 12px 15px;
   text-align: left;
@@ -346,8 +358,6 @@ body {
 }
 
 .tabla-consultas th {
-  background-color: #f8f9fa;
-  color: #666;
   font-weight: 600;
   text-transform: uppercase;
   font-size: 12px;

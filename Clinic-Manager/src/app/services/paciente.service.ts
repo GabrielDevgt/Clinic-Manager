@@ -2,14 +2,17 @@ import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { Paciente, PacienteInput } from '../models/paciente.model';
 import { invoke } from '@tauri-apps/api/core';
+import { ConsultaTemporalService } from './consulta-temporal.service'; 
 
 @Injectable({
   providedIn: 'root'
 })
 export class PacienteService {
 
-  constructor() { }
+  constructor(private consultaService: ConsultaTemporalService) { }
 
+
+  
   /**
    * Obtiene todos los pacientes de la base de datos
    * @returns Observable con array de pacientes

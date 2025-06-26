@@ -1,22 +1,28 @@
-<!-- <div class="contenedor-clinico">
+<div class="contenedor-clinico">
   <header class="cabecera-clinica">
     <h1 class="title">Registro de Consulta Temporal</h1>
     <div class="decoracion-azul"></div>
-  <!-- </header> -->
+  </header>
 
-  <!-- <form class="formulario-clinico" (submit)="registrarConsulta($event)"> -->
+  <form class="formulario-clinico" (ngSubmit)="registrarConsulta()">
     <!-- Sección Paciente -->
     <div class="fila-formulario">
       <div class="grupo-campo">
         <label for="id_paciente">Paciente *</label>
         <div *ngIf="cargando" class="mensaje-carga">Cargando lista de pacientes...</div>
         <div *ngIf="error" class="mensaje-error">{{ error }}</div>
-        <select id="id_paciente" name="id_paciente" required [disabled]="cargando || error">
+        <select id="id_paciente" name="id_paciente" required [attr.disabled]="cargando || error"
+                [(ngModel)]="formData.id_paciente">
           <option value="">-- Selecciona un paciente --</option>
           <option *ngFor="let paciente of pacientes" [value]="paciente.id_paciente">
             {{ paciente.nombre_1 }} {{ paciente.nombre_2 || '' }} {{ paciente.apellido_1 }} {{ paciente.apellido_2 || '' }} ({{ paciente.id_paciente }})
           </option>
         </select>
+      </div>
+      <div class="grupo-campo">
+        <label for="fecha_consulta">Fecha de la Consulta *</label>
+        <input type="date" id="fecha_consulta" name="fecha_consulta" required
+               [(ngModel)]="formData.fecha_consulta">
       </div>
     </div>
 
@@ -24,14 +30,8 @@
     <div class="fila-formulario">
       <div class="grupo-campo full-width">
         <label for="motivo_consulta">Motivo de la Consulta *</label>
-        <textarea id="motivo_consulta" name="motivo_consulta" required placeholder="Describa el motivo de la consulta"></textarea>
-      </div>
-    </div>
-
-    <div class="fila-formulario">
-      <div class="grupo-campo">
-        <label for="fecha_consulta">Fecha de la Consulta *</label>
-        <input type="date" id="fecha_consulta" name="fecha_consulta" [value]="fechaHoy" required>
+        <textarea id="motivo_consulta" name="motivo_consulta" required
+                  [(ngModel)]="formData.motivo_consulta"></textarea>
       </div>
     </div>
 
@@ -39,34 +39,37 @@
     <div class="fila-formulario fila-signos-vitales">
       <div class="grupo-campo">
         <label for="peso">Peso (kg)</label>
-        <input type="number" step="0.01" id="peso" name="peso" placeholder="Ej: 68.5">
+        <input type="number" step="0.01" id="peso" name="peso"
+               [(ngModel)]="formData.peso">
       </div>
       <div class="grupo-campo">
         <label for="altura">Altura (cm)</label>
-        <input type="number" step="0.01" id="altura" name="altura" placeholder="Ej: 172">
+        <input type="number" step="0.01" id="altura" name="altura"
+               [(ngModel)]="formData.altura">
       </div>
       <div class="grupo-campo">
         <label for="frecuencia_cardiaca">Frecuencia Cardíaca</label>
-        <input type="number" id="frecuencia_cardiaca" name="frecuencia_cardiaca" placeholder="Ej: 80">
+        <input type="number" id="frecuencia_cardiaca" name="frecuencia_cardiaca"
+               [(ngModel)]="formData.frecuencia_cardiaca">
       </div>
       <div class="grupo-campo">
         <label for="presion_arterial">Presión Arterial</label>
-        <input type="text" id="presion_arterial" name="presion_arterial" placeholder="Ej: 120/80">
+        <input type="text" id="presion_arterial" name="presion_arterial"
+               [(ngModel)]="formData.presion_arterial">
       </div>
     </div>
 
     <!-- Sección Historial Médico -->
     <div class="fila-formulario">
-      <div class="grupo-campo full-width">
+      <div class="grupo-campo">
         <label for="antecedente">Antecedentes Médicos</label>
-        <textarea id="antecedente" name="antecedente" placeholder="Describa los antecedentes médicos relevantes"></textarea>
+        <textarea id="antecedente" name="antecedente"
+                  [(ngModel)]="formData.antecedente"></textarea>
       </div>
-    </div>
-
-    <div class="fila-formulario">
-      <div class="grupo-campo full-width">
+      <div class="grupo-campo">
         <label for="enfermedades">Enfermedades Actuales</label>
-        <textarea id="enfermedades" name="enfermedades" placeholder="Describa las enfermedades actuales"></textarea>
+        <textarea id="enfermedades" name="enfermedades"
+                  [(ngModel)]="formData.enfermedades"></textarea>
       </div>
     </div>
 
@@ -74,14 +77,16 @@
     <div class="fila-formulario">
       <div class="grupo-campo full-width">
         <label for="laboratorio">Resultados de Laboratorio</label>
-        <textarea id="laboratorio" name="laboratorio" placeholder="Describa los resultados de laboratorio"></textarea>
+        <textarea id="laboratorio" name="laboratorio"
+                  [(ngModel)]="formData.laboratorio"></textarea>
       </div>
     </div>
 
     <div class="fila-formulario">
       <div class="grupo-campo full-width">
         <label for="examen_fisico">Examen Físico</label>
-        <textarea id="examen_fisico" name="examen_fisico" placeholder="Describa los hallazgos del examen físico"></textarea>
+        <textarea id="examen_fisico" name="examen_fisico"
+                  [(ngModel)]="formData.examen_fisico"></textarea>
       </div>
     </div>
 
@@ -89,29 +94,30 @@
     <div class="fila-formulario">
       <div class="grupo-campo full-width">
         <label for="diagnostico">Diagnóstico</label>
-        <textarea id="diagnostico" name="diagnostico" placeholder="Describa el diagnóstico"></textarea>
+        <textarea id="diagnostico" name="diagnostico"
+                  [(ngModel)]="formData.diagnostico"></textarea>
       </div>
     </div>
 
     <div class="fila-formulario">
       <div class="grupo-campo full-width">
         <label for="plan_terapeutico">Plan Terapéutico</label>
-        <textarea id="plan_terapeutico" name="plan_terapeutico" placeholder="Describa el plan de tratamiento"></textarea>
+        <textarea id="plan_terapeutico" name="plan_terapeutico"
+                  [(ngModel)]="formData.plan_terapeutico"></textarea>
       </div>
     </div>
 
     <!-- Próxima Cita -->
     <div class="fila-formulario">
-      <div class="grupo-campo">
+      <div class="grupo-campocita">
         <label for="proxima_cita">Próxima Cita *</label>
-        <input type="date" id="proxima_cita" name="proxima_cita" required>
+        <input type="date" id="proxima_cita" name="proxima_cita" required
+               [(ngModel)]="formData.proxima_cita">
+      </div>
+      <div class="contenedor-botones">
+        <button type="submit" class="btn btn-guardar">Guardar Consulta</button>
+        <button type="button" class="btn btn-cancelar" (click)="cancelarConsulta()">Cancelar</button>
       </div>
     </div>
-
-    <!-- Botones -->
-    <div class="contenedor-botones">
-      <button type="submit" class="btn btn-guardar">Guardar Consulta</button>
-      <!-- <button type="button" class="btn btn-cancelar" (click)="cancelarConsulta()">Cancelar</button> -->
-    </div>
-  <!-- </form>
-</div> --> -->
+  </form>
+</div>

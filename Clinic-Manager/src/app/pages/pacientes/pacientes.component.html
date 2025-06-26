@@ -66,7 +66,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let paciente of pacienteFiltrado; trackBy: trackByPacienteId">
+                <tr *ngFor="let paciente of getPaginatedPatients(); trackBy: trackByPacienteId">
                     <td>
                         <div class="paciente-info">
                             <div class="nombre-paciente">
@@ -98,7 +98,7 @@
                         <div class="acciones-tabla">
                             <button class="btn-accion btn-detalles" (click)="verDetalles(paciente.id_paciente)"
                                 title="Ver detalles completos">
-                                 Detalles
+                                Detalles
                             </button>
                             <!-- <button 
                                 class="btn-accion btn-historial"
@@ -112,5 +112,20 @@
                 </tr>
             </tbody>
         </table>
+        <!-- Paginación -->
+        <div class="pagination" *ngIf="!cargando && !error && pacienteFiltrado.length > 0">
+            <button class="btn-pagination" (click)="prevPage()" [disabled]="currentPage === 1 || cargando">
+                &lt; Anterior
+            </button>
+
+            <div class="page-info">
+                Página {{ currentPage }} de {{ totalPages }}
+ 
+            </div>
+
+            <button class="btn-pagination" (click)="nextPage()" [disabled]="currentPage === totalPages || cargando">
+                Siguiente &gt;
+            </button>
+        </div>
     </div>
 </div>

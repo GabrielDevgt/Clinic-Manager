@@ -1,22 +1,39 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { PacienteService } from '../../../services/paciente.service';
 import { ConsultaTemporalService } from '../../../services/consulta-temporal.service';
-import { Paciente } from '../../../models/paciente.model';
 import { Router } from '@angular/router';
-import { ConsultaTemporal } from '../../../models/consulta-temporal.model';
+import { Paciente } from '../../../models/paciente.model';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms'; // <-- Añade esta importación
 
 @Component({
   selector: 'app-registroconsultas',
-  imports: [CommonModule],
+  imports:[ FormsModule, CommonModule],
   templateUrl: './registroconsultas.component.html',
-  styleUrl: './registroconsultas.component.scss'
+  styleUrls: ['./registroconsultas.component.scss']
 })
 export class RegistroConsultaTemporalComponent implements OnInit {
   pacientes: Paciente[] = [];
-  fechaHoy: string = '';
-  cargando: boolean = true;
+  cargando = true;
   error: string | null = null;
+
+  formData = {
+    id_paciente: null as number | null,
+    fecha_consulta: new Date().toISOString().split('T')[0],
+    motivo_consulta: '',
+    peso: null as number | null,
+    altura: null as number | null,
+    frecuencia_cardiaca: null as number | null,
+    presion_arterial: null as string | null,
+    antecedente: null as string | null,
+    enfermedades: null as string | null,
+    laboratorio: null as string | null,
+    examen_fisico: null as string | null,
+    diagnostico: null as string | null,
+    proxima_cita: '',
+    plan_terapeutico: null as string | null
+  };
 
   constructor(
     private pacienteService: PacienteService,
@@ -25,74 +42,69 @@ export class RegistroConsultaTemporalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const hoy = new Date();
-    this.fechaHoy = hoy.toISOString().split('T')[0];
-    this.obtenerPacientes();
+    this.cargarPacientes();
   }
 
-  obtenerPacientes(): void {
-    this.cargando = true;
+  cargarPacientes(): void {
     this.pacienteService.obtenerPacientes().subscribe({
-      next: data => {
-        this.pacientes = data;
+      next: (pacientes) => {
+        this.pacientes = pacientes;
         this.cargando = false;
       },
-      error: err => {
-        this.error = 'Error al cargar los pacientes.';
+      error: (err) => {
+        this.error = 'Error al cargar pacientes';
         this.cargando = false;
         console.error(err);
       }
     });
   }
 
-// registrarConsulta(event: Event): void {
-//   event.preventDefault();
-//   const form = event.target as HTMLFormElement;
-//   const formData = new FormData(form);
+  registrarConsulta(): void {
+    console.log('Datos del formulario:', this.formData);
+    
+    if (!this.formData.id_paciente || !this.formData.motivo_consulta || !this.formData.proxima_cita) {
+      alert('Por favor complete los campos requeridos (*)');
+      return;
+    }
 
-//   // Objeto sin id_consulta (lo genera la BD)
-//   const consultaData = {
-//     id_paciente: Number(formData.get('id_paciente')),
-//     motivo_consulta: String(formData.get('motivo_consulta')),
-//     fecha_consulta: String(formData.get('fecha_consulta')),
-//     peso: this.toNullableNumber(formData.get('peso')),
-//     altura: this.toNullableNumber(formData.get('altura')),
-//     frecuencia_cardiaca: this.toNullableNumber(formData.get('frecuencia_cardiaca')),
-//     presion_arterial: this.toNullableString(formData.get('presion_arterial')),
-//     Antecedente: this.toNullableString(formData.get('antecedente')),
-//     Enfermedades: this.toNullableString(formData.get('enfermedades')),
-//     Laboratorio: this.toNullableString(formData.get('laboratorio')),
-//     Examen_fisico: this.toNullableString(formData.get('examen_fisico')),
-//     Diagnostico: this.toNullableString(formData.get('diagnostico')),
-//     proxima_cita: String(formData.get('proxima_cita')),
-//     Plan_terapeutico: this.toNullableString(formData.get('plan_terapeutico'))
-//   };
+    const datosParaInsertar = {
+      id_paciente: Number(this.formData.id_paciente),
+      motivo_consulta: this.formData.motivo_consulta,
+      fecha_consulta: this.formatoFechaRust(this.formData.fecha_consulta),
+      peso: this.formData.peso,
+      altura: this.formData.altura,
+      frecuencia_cardiaca: this.formData.frecuencia_cardiaca,
+      presion_arterial: this.formData.presion_arterial,
+      antecedente: this.formData.antecedente,
+      enfermedades: this.formData.enfermedades,
+      laboratorio: this.formData.laboratorio,
+      examen_fisico: this.formData.examen_fisico,
+      diagnostico: this.formData.diagnostico,
+      proxima_cita: this.formatoFechaRust(this.formData.proxima_cita),
+      plan_terapeutico: this.formData.plan_terapeutico
+    };
 
-//   this.consultaService.crearConsultaTemporal(consultaData).subscribe({
-//     next: () => {
-//       alert('Consulta registrada exitosamente');
-//       this.router.navigate(['/consultas-temporales']);
-//     },
-//     error: err => {
-//       alert('Error al registrar la consulta');
-//       console.error(err);
-//     }
-//   });
-// }
-//   cancelarConsulta(): void {
-//     this.router.navigate(['/consultas-temporales']);
-//   }
+    console.log('Datos a enviar al backend:', datosParaInsertar);
 
-//   private toNullableNumber(value: FormDataEntryValue | null): number | null {
-//     if (!value) return null;
-//     const val = Number(value);
-//     return isNaN(val) ? null : val;
-//   }
+    this.consultaService.crear(datosParaInsertar).subscribe({
+      next: (id) => {
+        alert(`Consulta registrada exitosamente (ID: ${id})`);
+        this.router.navigate(['/consultas-temporales']);
+      },
+      error: (err) => {
+        console.error('Error al registrar consulta:', err);
+        alert('Error al registrar la consulta: ' + (err.message || 'Por favor intente nuevamente'));
+      }
+    });
+  }
 
-//   private toNullableString(value: FormDataEntryValue | null): string | null {
-//     if (!value) return null;
-//     const str = String(value).trim();
-//     return str === '' ? null : str;
-//   }
-// }
+  private formatoFechaRust(fecha: string): string {
+    return `${fecha} 12:00:00`;
+  }
+
+  cancelarConsulta(): void {
+    if(confirm('¿Está seguro que desea cancelar el registro?')) {
+      this.router.navigate(['/consultas-temporales']);
+    }
+  }
 }
