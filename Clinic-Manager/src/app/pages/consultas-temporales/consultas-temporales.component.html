@@ -1,7 +1,7 @@
 <div class="container">
   <!-- Header Section -->
   <div class="header">
-    <h1 class="title">Gestión de Consultas Temporales</h1>
+    <h1 class="title">Gestión de Consultas</h1>
     <div class="actions">
       <button class="btn btn-primary" (click)="irANuevaConsulta()">
         <span class="btn-icon">➕</span> Nueva Consulta
@@ -86,11 +86,9 @@
           <td>
             <div class="acciones-tabla">
               <button class="btn-accion btn-detalles" (click)="verDetalles(consulta.id_consulta)">
-                <span class="icono">👁️</span> Detalles
+                Detalles
               </button>
-              <button class="btn-accion btn-editar" (click)="editarConsulta(consulta.id_consulta)">
-                <span class="icono">✏️</span> Editar
-              </button>
+
             </div>
           </td>
         </tr>

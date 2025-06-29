@@ -7,45 +7,45 @@
     <div class="consulta-card" *ngIf="consulta && paciente; else loading">
         <div class="consulta-header">
             <h2>{{ obtenerNombrePaciente() }}</h2>
-            <span class="fecha-consulta">{{ consulta?.fecha_consulta }}</span>
+            <span class="fecha-consulta">{{ consulta.fecha_consulta }}</span>
         </div>
 
         <div class="consulta-body">
             <div class="row">
                 <div class="col">
                     <h3>Información Básica</h3>
-                    <p><strong>Motivo de Consulta:</strong> {{ consulta?.motivo_consulta || 'No especificado' }}</p>
-                    <p><strong>Antecedentes:</strong> {{ consulta?.antecedente || 'No registrados' }}</p>
-                    <p><strong>Enfermedades:</strong> {{ consulta?.enfermedades || 'No registradas' }}</p>
+                    <p><strong>Motivo de Consulta:</strong> {{ consulta.motivo_consulta || 'No especificado' }}</p>
+                    <p><strong>Antecedentes:</strong> {{ consulta.antecedente || 'No registrados' }}</p>
+                    <p><strong>Enfermedades:</strong> {{ consulta.enfermedades || 'No registradas' }}</p>
                 </div>
 
                 <div class="col">
                     <h3>Signos Vitales</h3>
-                    <p><strong>Peso:</strong> {{ consulta?.peso ? consulta?.peso + ' kg' : 'No registrado' }}</p>
-                    <p><strong>Altura:</strong> {{ consulta?.altura ? consulta?.altura + ' cm' : 'No registrada' }}</p>
-                    <p><strong>Presión Arterial:</strong> {{ consulta?.presion_arterial || 'No registrada' }}</p>
-                    <p><strong>Frecuencia Cardíaca:</strong> {{ consulta?.frecuencia_cardiaca ? consulta?.frecuencia_cardiaca + ' lpm' : 'No registrada' }}</p>
+                    <p><strong>Peso:</strong> {{ consulta.peso ? consulta.peso + ' kg' : 'No registrado' }}</p>
+                    <p><strong>Altura:</strong> {{ consulta.altura ? consulta.altura + ' cm' : 'No registrada' }}</p>
+                    <p><strong>Presión Arterial:</strong> {{ consulta.presion_arterial || 'No registrada' }}</p>
+                    <p><strong>Frecuencia Cardíaca:</strong> {{ consulta.frecuencia_cardiaca ? consulta.frecuencia_cardiaca + ' lpm' : 'No registrada' }}</p>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col">
                     <h3>Exámenes</h3>
-                    <p><strong>Laboratorio:</strong> {{ consulta?.laboratorio || 'No especificado' }}</p>
-                    <p><strong>Examen Físico:</strong> {{ consulta?.examen_fisico || 'No especificado' }}</p>
+                    <p><strong>Laboratorio:</strong> {{ consulta.laboratorio || 'No especificado' }}</p>
+                    <p><strong>Examen Físico:</strong> {{ consulta.examen_fisico || 'No especificado' }}</p>
                 </div>
 
                 <div class="col">
                     <h3>Diagnóstico y Tratamiento</h3>
-                    <p><strong>Diagnóstico:</strong> {{ consulta?.diagnostico || 'No especificado' }}</p>
-                    <p><strong>Plan Terapéutico:</strong> {{ consulta?.plan_terapeutico || 'No especificado' }}</p>
+                    <p><strong>Diagnóstico:</strong> {{ consulta.diagnostico || 'No especificado' }}</p>
+                    <p><strong>Plan Terapéutico:</strong> {{ consulta.plan_terapeutico || 'No especificado' }}</p>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col">
                     <h3>Seguimiento</h3>
-                    <p><strong>Próxima Cita:</strong> {{ consulta?.proxima_cita || 'No programada' }}</p>
+                    <p><strong>Próxima Cita:</strong> {{ consulta.proxima_cita || 'No programada' }}</p>
                 </div>
             </div>
         </div>

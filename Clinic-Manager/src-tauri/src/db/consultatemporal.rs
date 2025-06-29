@@ -95,40 +95,40 @@ pub fn eliminar_consulta_temporal(id_consulta: i32) -> Result<String, String> {
     Ok("Consulta eliminada correctamente".to_string())
 }
 
-pub fn obtener_consultas_por_paciente(id_paciente: i32) -> Result<Vec<ConsultaTemporal>, String> {
-    let conn = Connection::open("clinica.db")
-        .map_err(|e| format!("Error conectando a la base de datos: {}", e))?;
+// // pub fn obtener_consultas_por_paciente(id_paciente: i32) -> Result<Vec<ConsultaTemporal>, String> {
+//     let conn = Connection::open("clinica.db")
+//         .map_err(|e| format!("Error conectando a la base de datos: {}", e))?;
 
-    let mut stmt = conn.prepare(
-        "SELECT * FROM consultatemporales WHERE id_paciente = ?1 ORDER BY fecha_consulta DESC"
-    )
-    .map_err(|e| format!("Error preparando consulta: {}", e))?;
+//     let mut stmt = conn.prepare(
+//         "SELECT * FROM consultatemporales WHERE id_paciente = ?1 ORDER BY fecha_consulta DESC"
+//     )
+//     .map_err(|e| format!("Error preparando consulta: {}", e))?;
 
-    let consultas = stmt.query_map(params![id_paciente], |row| {
-        Ok(ConsultaTemporal {
-            id_consulta: row.get(0)?,
-            id_paciente: row.get(1)?,
-            motivo_consulta: row.get(2)?,
-            fecha_consulta: row.get(3)?,
-            peso: row.get(4)?,
-            altura: row.get(5)?,
-            frecuencia_cardiaca: row.get(6)?,
-            presion_arterial: row.get(7)?,
-            antecedente: row.get(8)?,
-            enfermedades: row.get(9)?,
-            laboratorio: row.get(10)?,
-            examen_fisico: row.get(11)?,
-            diagnostico: row.get(12)?,
-            proxima_cita: row.get(13)?,
-            plan_terapeutico: row.get(14)?,
-        })
-    })
-    .map_err(|e| format!("Error ejecutando consulta: {}", e))?
-    .collect::<Result<Vec<_>, _>>()
-    .map_err(|e| format!("Error procesando resultados: {}", e))?;
+//     let consultas = stmt.query_map(params![id_paciente], |row| {
+//         Ok(ConsultaTemporal {
+//             id_consulta: row.get(0)?,
+//             id_paciente: row.get(1)?,
+//             motivo_consulta: row.get(2)?,
+//             fecha_consulta: row.get(3)?,
+//             peso: row.get(4)?,
+//             altura: row.get(5)?,
+//             frecuencia_cardiaca: row.get(6)?,
+//             presion_arterial: row.get(7)?,
+//             antecedente: row.get(8)?,
+//             enfermedades: row.get(9)?,
+//             laboratorio: row.get(10)?,
+//             examen_fisico: row.get(11)?,
+//             diagnostico: row.get(12)?,
+//             proxima_cita: row.get(13)?,
+//             plan_terapeutico: row.get(14)?,
+//         })
+//     })
+//     .map_err(|e| format!("Error ejecutando consulta: {}", e))?
+//     .collect::<Result<Vec<_>, _>>()
+//     .map_err(|e| format!("Error procesando resultados: {}", e))?;
 
-    Ok(consultas)
-}
+//     Ok(consultas)
+// }
 
 pub fn obtener_consulta_por_id(id_consulta: i32) -> Result<ConsultaTemporal, String> {
     let conn = Connection::open("clinica.db")

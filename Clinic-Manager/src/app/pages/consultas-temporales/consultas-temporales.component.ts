@@ -89,22 +89,21 @@ export class ConsultasTemporalesComponent implements OnInit {
     return paciente ? this.pacienteService.obtenerNombreCompleto(paciente) : 'Paciente no encontrado';
   }
 
-  formatearFecha(fecha: string): string {
-    if (!fecha) return 'No especificada';
-    
-    try {
-      const fechaObj = new Date(fecha.includes('T') ? fecha : fecha.replace(' ', 'T'));
-      return fechaObj.toLocaleDateString('es-GT', {
-        year: 'numeric',
-        month: 'short',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit'
-      });
-    } catch {
-      return fecha;
-    }
+formatearFecha(fecha: string): string {
+  if (!fecha) return 'No especificada';
+
+  try {
+    const fechaObj = new Date(fecha.includes('T') ? fecha : fecha.replace(' ', 'T'));
+    return fechaObj.toLocaleDateString('es-GT', {
+      year: 'numeric',
+      month: 'short',
+      day: '2-digit'
+    });
+  } catch {
+    return fecha;
   }
+}
+
 
   verDetalles(id: number): void {
     this.router.navigate(['/consultas-temporales/detalles', id]);
