@@ -1,123 +1,38 @@
-.citas-container {
-  max-width: 800px;
-  margin: 1rem auto;
+.contenedor-citas {
   padding: 1rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
 
-  .titulo-seccion {
-    color: #2c3e50;
-    border-bottom: 2px solid #4a6fa5;
-    padding-bottom: 0.5rem;
-    margin-bottom: 1.5rem;
+  h2 {
+    margin-bottom: 1rem;
+    font-weight: 600;
+    color: #333;
   }
 
-  .lista-citas {
-    display: grid;
-    gap: 1rem;
-  }
+  .tabla-citas {
+    width: 100%;
+    border-collapse: collapse;
 
-  .cita-card {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    padding: 1rem;
-    transition: transform 0.2s;
-
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    th,
+    td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid #ccc;
     }
 
-    .cita-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.5rem;
-
-      .fecha-cita {
-        font-weight: bold;
-        color: #4a6fa5;
-      }
-
-      .estado-cita {
-        padding: 0.25rem 0.5rem;
-        border-radius: 4px;
-        font-size: 0.8rem;
-        font-weight: bold;
-
-        &.pendiente {
-          background-color: #fff3cd;
-          color: #856404;
-        }
-
-        &.atendida {
-          background-color: #d4edda;
-          color: #155724;
-        }
-
-        &.cancelada {
-          background-color: #f8d7da;
-          color: #721c24;
-        }
-      }
+    th {
+      background-color: #e9ecef;
     }
 
-    .cita-body {
-      margin-bottom: 1rem;
-
-      .nombre-paciente {
-        margin: 0.5rem 0;
-        color: #2c3e50;
-
-        a {
-          color: inherit;
-          text-decoration: none;
-
-          &:hover {
-            text-decoration: underline;
-          }
-        }
-      }
-
-      .motivo-consulta {
-        margin: 0.5rem 0;
-        color: #555;
-      }
-    }
-
-    .cita-actions {
-      display: flex;
-      justify-content: flex-end;
-
-      .btn-accion {
-        padding: 0.5rem 1rem;
-        border: none;
-        border-radius: 4px;
-        background-color: #4a6fa5;
-        color: white;
-        cursor: pointer;
-        transition: background-color 0.2s;
-
-        &:hover {
-          background-color: #3a5a8c;
-        }
-      }
+    tr:hover {
+      background-color: #f1f1f1;
     }
   }
 
-  .sin-citas {
-    text-align: center;
-    padding: 2rem;
+  div {
+    margin-top: 1rem;
+    font-style: italic;
     color: #666;
-  }
-
-  .mensaje-carga, .mensaje-error {
-    text-align: center;
-    padding: 1rem;
-  }
-
-  .mensaje-error {
-    color: #e74c3c;
-    font-weight: bold;
   }
 }
