@@ -5,7 +5,6 @@ use crate::models::paciente::Paciente;
 
 
 
-//============Crear un nuevo paciente en la base de datos
 pub fn insertar_paciente(
     nombre_1: String,
     nombre_2: String,
@@ -17,14 +16,17 @@ pub fn insertar_paciente(
     direccion: String,
     telefono: String,
     genero: String,
-) -> Result<String, String> {
+) -> Result<i64, String> {
     let conexion = Connection::open("clinica.db")
         .map_err(|e| format!("Error conectando a la base de datos: {}", e))?;
 
     conexion
         .execute(
-            "INSERT INTO paciente (Nombre_1, Nombre_2, Nombre_3, Apellido_1, Apellido_2, Apellido_casado, Fecha_Nacimiento, Direccion, Telefono, Genero) 
-             VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10)",
+            "INSERT INTO paciente (
+                Nombre_1, Nombre_2, Nombre_3, Apellido_1, Apellido_2, 
+                Apellido_Casado, Fecha_Nacimiento, Direccion, Telefono, Genero
+            ) 
+            VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10)",
             (
                 &nombre_1,
                 &nombre_2,
@@ -40,8 +42,10 @@ pub fn insertar_paciente(
         )
         .map_err(|e| format!("Error insertando paciente: {}", e))?;
 
-    Ok("Paciente insertado exitosamente".to_string())
+    Ok(conexion.last_insert_rowid()) // 👈 Esto devuelve el ID insertado
 }
+
+
 ///================ Obtiene todos los pacientes de la base de datos
 pub fn obtener_pacientes() -> Result<Vec<Paciente>, String> {
     let conexion = Connection::open("clinica.db")

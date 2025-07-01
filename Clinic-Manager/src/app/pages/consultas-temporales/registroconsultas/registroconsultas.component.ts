@@ -6,6 +6,7 @@ import { Paciente } from '../../../models/paciente.model';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; // <-- Añade esta importación
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-registroconsultas',
@@ -38,12 +39,19 @@ export class RegistroConsultaTemporalComponent implements OnInit {
   constructor(
     private pacienteService: PacienteService,
     private consultaService: ConsultaTemporalService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
-  ngOnInit(): void {
+ ngOnInit(): void {
+  this.route.queryParams.subscribe(params => {
+    const idPacienteParam = params['id_paciente'];
+    if (idPacienteParam) {
+      this.formData.id_paciente = Number(idPacienteParam);
+    }
     this.cargarPacientes();
-  }
+  });
+}
 
   cargarPacientes(): void {
     this.pacienteService.obtenerPacientes().subscribe({

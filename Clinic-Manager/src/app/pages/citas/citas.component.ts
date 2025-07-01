@@ -1,16 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, LOCALE_ID, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe, registerLocaleData } from '@angular/common';
 import { Cita } from '../../models/cita.model';
 import { CitaService } from '../../services/cita.service';
+import localeEs from '@angular/common/locales/es';
 
+// Registra el locale español solo para este componente
+registerLocaleData(localeEs);
 
 @Component({
   selector: 'app-citas',
-  imports:[FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './citas.component.html',
-  styleUrls: ['./citas.component.scss']
+  styleUrls: ['./citas.component.scss'],
+  providers: [
+    DatePipe, // Asegúrate de incluir DatePipe en los providers
+    { provide: LOCALE_ID, useValue: 'es' } // Configura el locale español
+  ]
 })
 export class CitasComponent implements OnInit {
  citas: Cita[] = [];
