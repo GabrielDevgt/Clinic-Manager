@@ -1,4 +1,9 @@
 <div class="contenedor-clinico">
+  <div *ngIf="showMessage" class="notification {{messageType}}">
+        {{message}}
+        <button class="close-btn" (click)="showMessage = false">×</button>
+    </div>
+
   <header class="cabecera-clinica">
     <h1 class="title">Registro de Consulta Temporal</h1>
     <div class="decoracion-azul"></div>
