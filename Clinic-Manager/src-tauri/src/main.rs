@@ -23,7 +23,10 @@ fn main() {
             api::consultatemporal::obtener_consulta_temporal_por_id, // para busquedá de consulta fallando
             api::consultatemporal::actualizar_consulta_temporal, //prefiero de momento no usarlo pero puede funcionar
             api::consultatemporal::eliminar_consulta_temporal, // prefiero de momento no usarlo pero puede funcionar
-            api::cita::get_proximas_citas
+            api::cita::get_proximas_citas,
+            api::cita::actualizar_estado_cita,
+api::cita::eliminar_cita,
+
                                                                //============PAUSADAS TEMPORALMENTE================//
                                                                // api::consulta::obtener_consultas, //pa
                                                                // api::consulta::obtener_consulta_por_id,

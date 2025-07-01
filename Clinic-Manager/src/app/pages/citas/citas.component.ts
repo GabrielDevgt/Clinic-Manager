@@ -13,7 +13,7 @@ import { CitaService } from '../../services/cita.service';
   styleUrls: ['./citas.component.scss']
 })
 export class CitasComponent implements OnInit {
-  citas: Cita[] = [];
+ citas: Cita[] = [];
   cargando = true;
   error: string | null = null;
 
@@ -31,4 +31,30 @@ export class CitasComponent implements OnInit {
       }
     });
   }
+
+ cambiarEstado(cita: Cita, event: Event): void {
+  const selectElement = event.target as HTMLSelectElement;
+  const nuevoEstado = selectElement.value;
+  console.log('Nuevo estado seleccionado:', nuevoEstado); // 🔍
+
+  if (!nuevoEstado) return;
+
+  if (nuevoEstado === 'Cancelada') {
+    this.citaService.eliminarCita(cita.id_cita).subscribe(() => {
+      this.citas = this.citas.filter(c => c.id_cita !== cita.id_cita);
+    });
+  } else if (nuevoEstado === 'Atendida') {
+  this.citaService.actualizarEstadoCita(cita.id_cita, nuevoEstado).subscribe(() => {
+    const index = this.citas.findIndex(c => c.id_cita === cita.id_cita);
+    if (index !== -1) {
+      this.citas[index] = { ...this.citas[index], estado_cita: nuevoEstado };
+    }
+  });
+}
+
+}
+
+
+
+
 }
