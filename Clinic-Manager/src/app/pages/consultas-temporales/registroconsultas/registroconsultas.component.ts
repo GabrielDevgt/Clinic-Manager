@@ -3,13 +3,13 @@ import { PacienteService } from '../../../services/paciente.service';
 import { ConsultaTemporalService } from '../../../services/consulta-temporal.service';
 import { Router } from '@angular/router';
 import { Paciente } from '../../../models/paciente.model';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // <-- Añade esta importación
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-registroconsultas',
-  imports:[ FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './registroconsultas.component.html',
   styleUrls: ['./registroconsultas.component.scss']
 })
@@ -17,6 +17,9 @@ export class RegistroConsultaTemporalComponent implements OnInit {
   pacientes: Paciente[] = [];
   cargando = true;
   error: string | null = null;
+  showMessage = false;
+  message = '';
+  messageType: 'success' | 'error' | 'warning' = 'success';
 
   formData = {
     id_paciente: null as number | null,
@@ -38,11 +41,28 @@ export class RegistroConsultaTemporalComponent implements OnInit {
   constructor(
     private pacienteService: PacienteService,
     private consultaService: ConsultaTemporalService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.cargarPacientes();
+    this.route.queryParams.subscribe(params => {
+      const idPacienteParam = params['id_paciente'];
+      if (idPacienteParam) {
+        this.formData.id_paciente = Number(idPacienteParam);
+      }
+      this.cargarPacientes();
+    });
+  }
+
+  private showNotification(message: string, type: 'success' | 'error' | 'warning') {
+    this.message = message;
+    this.messageType = type;
+    this.showMessage = true;
+    
+    setTimeout(() => {
+      this.showMessage = false;
+    }, 5000);
   }
 
   cargarPacientes(): void {
@@ -55,15 +75,41 @@ export class RegistroConsultaTemporalComponent implements OnInit {
         this.error = 'Error al cargar pacientes';
         this.cargando = false;
         console.error(err);
+        this.showNotification('Error al cargar la lista de pacientes', 'error');
       }
     });
   }
 
+  validarCampos(): boolean {
+    const camposObligatorios = [
+      { campo: 'id_paciente', nombre: 'Paciente' },
+      { campo: 'motivo_consulta', nombre: 'Motivo de la Consulta' },
+      { campo: 'proxima_cita', nombre: 'Próxima Cita' }
+    ];
+
+    for (const item of camposObligatorios) {
+      if (!this.formData[item.campo as keyof typeof this.formData]) {
+        this.showNotification(`El campo ${item.nombre} es obligatorio`, 'error');
+        return false;
+      }
+    }
+
+    // Validación adicional para fecha de próxima cita
+    if (this.formData.proxima_cita) {
+      const proximaCitaDate = new Date(this.formData.proxima_cita);
+      const fechaConsultaDate = new Date(this.formData.fecha_consulta);
+      
+      if (proximaCitaDate < fechaConsultaDate) {
+        this.showNotification('La fecha de próxima cita no puede ser anterior a la fecha de consulta', 'error');
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   registrarConsulta(): void {
-    console.log('Datos del formulario:', this.formData);
-    
-    if (!this.formData.id_paciente || !this.formData.motivo_consulta || !this.formData.proxima_cita) {
-      alert('Por favor complete los campos requeridos (*)');
+    if (!this.validarCampos()) {
       return;
     }
 
@@ -84,16 +130,16 @@ export class RegistroConsultaTemporalComponent implements OnInit {
       plan_terapeutico: this.formData.plan_terapeutico
     };
 
-    console.log('Datos a enviar al backend:', datosParaInsertar);
-
     this.consultaService.crear(datosParaInsertar).subscribe({
       next: (id) => {
-        alert(`Consulta registrada exitosamente (ID: ${id})`);
-        this.router.navigate(['/consultas-temporales']);
+        this.showNotification('Consulta registrada exitosamente', 'success');
+        setTimeout(() => {
+          this.router.navigate(['/consultas-temporales']);
+        }, 1500);
       },
       error: (err) => {
         console.error('Error al registrar consulta:', err);
-        alert('Error al registrar la consulta: ' + (err.message || 'Por favor intente nuevamente'));
+        this.showNotification('Error al registrar la consulta: ' + (err.message || 'Por favor intente nuevamente'), 'error');
       }
     });
   }
@@ -103,8 +149,7 @@ export class RegistroConsultaTemporalComponent implements OnInit {
   }
 
   cancelarConsulta(): void {
-    if(confirm('¿Está seguro que desea cancelar el registro?')) {
-      this.router.navigate(['/consultas-temporales']);
-    }
+    this.router.navigate(['/consultas']);
   }
 }
+

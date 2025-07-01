@@ -521,3 +521,34 @@ font-family: 'Trebuchet MS', sans-serif;
     max-width: 150px;
   }
 }
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  gap: 15px;
+}
+
+.btn-pagination {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover:not([disabled]) {
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+  }
+
+  &[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.page-info {
+  font-size: 14px;
+  color: #495057;
+}

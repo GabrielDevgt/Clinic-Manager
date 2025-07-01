@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { CommonModule } from '@angular/common';
@@ -22,11 +22,17 @@ export class ConsultasTemporalesComponent implements OnInit {
   cargando = true;
   error: string | null = null;
   terminoBusqueda = '';
+  
+  // Propiedades de paginación
+  currentPage = 1;
+  itemsPerPage = 10;
+  totalPages = 1;
 
   constructor(
     private consultaService: ConsultaTemporalService,
     private pacienteService: PacienteService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -45,6 +51,7 @@ export class ConsultasTemporalesComponent implements OnInit {
         this.pacientes = pacientes;
         this.consultas = consultas;
         this.consultasFiltradas = [...consultas];
+        this.calculateTotalPages();
         this.cargando = false;
       },
       error: (err) => {
@@ -64,24 +71,63 @@ export class ConsultasTemporalesComponent implements OnInit {
   filtrarConsultas(): void {
     if (!this.terminoBusqueda.trim()) {
       this.consultasFiltradas = [...this.consultas];
-      return;
+    } else {
+      this.consultasFiltradas = this.consultas.filter(consulta => {
+        const paciente = this.pacientes.find(p => p.id_paciente === consulta.id_paciente);
+        const nombrePaciente = paciente ? 
+          this.pacienteService.obtenerNombreCompleto(paciente).toLowerCase() : '';
+        
+        const camposBusqueda = [
+          nombrePaciente,
+          consulta.motivo_consulta.toLowerCase(),
+          this.formatearFecha(consulta.fecha_consulta).toLowerCase(),
+          consulta.diagnostico?.toLowerCase() || '',
+          consulta.antecedente?.toLowerCase() || ''
+        ];
+
+        return camposBusqueda.some(campo => campo.includes(this.terminoBusqueda));
+      });
     }
+    
+    this.currentPage = 1; // Resetear a la primera página al buscar
+    this.calculateTotalPages();
+  }
 
-    this.consultasFiltradas = this.consultas.filter(consulta => {
-      const paciente = this.pacientes.find(p => p.id_paciente === consulta.id_paciente);
-      const nombrePaciente = paciente ? 
-        this.pacienteService.obtenerNombreCompleto(paciente).toLowerCase() : '';
-      
-      const camposBusqueda = [
-        nombrePaciente,
-        consulta.motivo_consulta.toLowerCase(),
-        this.formatearFecha(consulta.fecha_consulta).toLowerCase(),
-        consulta.diagnostico?.toLowerCase() || '',
-        consulta.antecedente?.toLowerCase() || ''
-      ];
+  // Métodos de paginación
+  calculateTotalPages(): void {
+    this.totalPages = Math.ceil(this.consultasFiltradas.length / this.itemsPerPage);
+    if (this.totalPages === 0) this.totalPages = 1;
+    
+    if (this.currentPage > this.totalPages) {
+      this.currentPage = this.totalPages;
+    }
+  }
 
-      return camposBusqueda.some(campo => campo.includes(this.terminoBusqueda));
-    });
+  getPaginatedConsultas(): ConsultaTemporal[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return [...this.consultasFiltradas.slice(startIndex, endIndex)];
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.cdr.detectChanges();
+    }
+  }
+
+  prevPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.cdr.detectChanges();
+    }
+  }
+
+  goToPage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.cdr.detectChanges();
+    }
   }
 
   obtenerNombrePaciente(id: number): string {
@@ -91,15 +137,13 @@ export class ConsultasTemporalesComponent implements OnInit {
 
   formatearFecha(fecha: string): string {
     if (!fecha) return 'No especificada';
-    
+
     try {
       const fechaObj = new Date(fecha.includes('T') ? fecha : fecha.replace(' ', 'T'));
       return fechaObj.toLocaleDateString('es-GT', {
         year: 'numeric',
         month: 'short',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit'
+        day: '2-digit'
       });
     } catch {
       return fecha;

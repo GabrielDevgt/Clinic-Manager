@@ -39,10 +39,10 @@ pub fn obtener_consultas_temporales() -> Result<Vec<ConsultaTemporal>, String> {
     consultatemporal::obtener_consultas()
 }
 
-#[command]
-pub fn obtener_consultas_por_paciente(id_paciente: i32) -> Result<Vec<ConsultaTemporal>, String> {
-    consultatemporal::obtener_consultas_por_paciente(id_paciente)
-}
+// #[command]
+// pub fn obtener_consultas_por_paciente(id_paciente: i32) -> Result<Vec<ConsultaTemporal>, String> {
+//     consultatemporal::obtener_consultas_por_paciente(id_paciente)
+// }
 
 #[command]
 pub fn obtener_consulta_temporal_por_id(id_consulta: i32) -> Result<ConsultaTemporal, String> {

@@ -1,50 +1,37 @@
-<div class="citas-container">
-  <h2 class="titulo-seccion">Próximas Citas</h2>
-  
-  <div *ngIf="cargando" class="mensaje-carga">
-    <p>Cargando próximas citas...</p>
-  </div>
+<h2>📅 Próximas Citas</h2>
 
-  <div *ngIf="error" class="mensaje-error">
-    <p>{{ error }}</p>
-  </div>
+<table *ngIf="!cargando && citas.length > 0" class="tabla-citas">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Paciente</th>
+      <th>Fecha</th>
+      <th>Estado</th>
+      <th>Acción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let cita of citas">
+      <td>{{ cita.id_cita }}</td>
+      <td>{{ cita.nombre_completo }}</td>
+      <td>{{ cita.fecha_cita | date: 'longDate' }}</td>
+      <td>
+        <span [ngClass]="{
+  'estado-realizada': cita.estado_cita === 'Atendida',
+  'estado-cancelada': cita.estado_cita === 'Cancelada'
+}">{{ cita.estado_cita }}</span>
 
-  <div *ngIf="!cargando && !error" class="lista-citas">
-    <div *ngIf="citas.length === 0" class="sin-citas">
-      <p>No hay citas próximas programadas</p>
-    </div>
+      </td>
+      <td>
+        <ng-container *ngIf="cita.estado_cita === 'Pendiente'">
+          <select (change)="cambiarEstado(cita, $event)">
+           <option value="" selected disabled>Cambiar estado</option>
+            <option value="Cancelada">❌ Cancelar</option>
+            <option value="Atendida">✅ Atendida</option>
+          </select>
 
-    <div *ngFor="let cita of citas" class="cita-card">
-      <div class="cita-header">
-        <span class="fecha-cita">{{ formatearFecha(cita.fecha_cita) }}</span>
-        <span class="estado-cita" [ngClass]="{
-          'pendiente': cita.estado_cita === 'Pendiente',
-          'atendida': cita.estado_cita === 'Atendida',
-          'cancelada': cita.estado_cita === 'Cancelada'
-        }">
-          {{ cita.estado_cita }}
-        </span>
-      </div>
-
-      <div class="cita-body">
-        <h3 class="nombre-paciente">
-          <a [routerLink]="['/pacientes/detalle', cita.id_paciente]">
-            {{ cita.paciente?.nombre_completo || 'Paciente no encontrado' }}
-          </a>
-        </h3>
-        
-        <p class="motivo-consulta" *ngIf="cita.consulta_vinculada?.motivo_consulta">
-          {{ cita.consulta_vinculada?.motivo_consulta }}
-
-        </p>
-        <p class="motivo-consulta" *ngIf="!cita.consulta_vinculada?.motivo_consulta">
-          <strong>Motivo no especificado</strong>
-        </p>
-      </div>
-
-      <div class="cita-actions">
-        <button class="btn-accion btn-detalles">Ver Detalles</button>
-      </div>
-    </div>
-  </div>
-</div>
+        </ng-container>
+      </td>
+    </tr>
+  </tbody>
+</table>

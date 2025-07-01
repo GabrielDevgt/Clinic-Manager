@@ -212,6 +212,7 @@ pub fn inicializar_bases_datos() -> Result<()> {
             diagnostico      TEXT,
             proxima_cita        TEXT NOT NULL,
             plan_terapeutico TEXT,
+            id_cita             INTEGER,
             FOREIGN KEY (id_paciente) REFERENCES paciente (id_paciente)
         );
 
@@ -242,6 +243,19 @@ pub fn inicializar_bases_datos() -> Result<()> {
             SELECT CASE WHEN (SELECT es_cronica FROM enfermedades WHERE id_enfermedad = NEW.id_enfermedad) != 0 
             THEN RAISE(ABORT, 'Error: Esta enfermedad es crónica. Usa antecedentes_patologicos.') END;
         END;
+
+        CREATE TRIGGER IF NOT EXISTS generar_cita_desde_temporal
+    AFTER INSERT ON consultatemporales
+    FOR EACH ROW
+    BEGIN
+        INSERT INTO cita (id_paciente, fecha_cita, estado_cita)
+        VALUES (NEW.id_paciente, NEW.proxima_cita, 'Pendiente');
+        
+        UPDATE consultatemporales 
+        SET id_cita = last_insert_rowid() 
+        WHERE id_consulta = NEW.id_consulta;
+    END;
+
         "#
     ).expect("Error creando tablas adicionales y triggers");
 

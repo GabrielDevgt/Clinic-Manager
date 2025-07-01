@@ -13,13 +13,14 @@ pub fn insertar_paciente(
     direccion: String,
     telefono: String,
     genero: String,
-) -> Result<String, String> {
+) -> Result<i64, String> {
     paciente::insertar_paciente(
         nombre_1, nombre_2, nombre_3,
         apellido_1, apellido_2, apellido_casado,
         fecha_nacimiento, direccion, telefono, genero
     )
 }
+
 
 #[command]
 pub fn obtener_pacientes() -> Result<Vec<Paciente>, String> {

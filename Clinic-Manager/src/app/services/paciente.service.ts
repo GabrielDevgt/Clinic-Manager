@@ -36,30 +36,29 @@ export class PacienteService {
    * @param paciente Datos del paciente a insertar
    * @returns Observable con mensaje de confirmación
    */
-  insertarPaciente(paciente: PacienteInput): Observable<string> {
-    return from(
-      invoke<string>('insertar_paciente', {
-        nombre1: paciente.nombre_1,
-        nombre2: paciente.nombre_2,
-        nombre3: paciente.nombre_3 || null,
-        apellido1: paciente.apellido_1,
-        apellido2: paciente.apellido_2 || null,
-        apellidoCasado: paciente.apellido_casado || null,
-        fechaNacimiento: paciente.fecha_nacimiento,
-        direccion: paciente.direccion,
-        telefono: paciente.telefono,
-        genero: paciente.genero
-      })
-        .then(resultado => {
-          console.log('Paciente insertado:', resultado);
-          return resultado;
-        })
-        .catch(error => {
-          console.error('Error insertando paciente:', error);
-          throw error;
-        })
-    );
-  }
+  insertarPaciente(paciente: PacienteInput): Observable<number> {
+  return from(
+    invoke<number>('insertar_paciente', {
+      nombre1: paciente.nombre_1,
+      nombre2: paciente.nombre_2,
+      nombre3: paciente.nombre_3 || null,
+      apellido1: paciente.apellido_1,
+      apellido2: paciente.apellido_2 || null,
+      apellidoCasado: paciente.apellido_casado || null,
+      fechaNacimiento: paciente.fecha_nacimiento,
+      direccion: paciente.direccion,
+      telefono: paciente.telefono,
+      genero: paciente.genero
+    }).then(id => {
+      console.log('Paciente insertado con ID:', id);
+      return id;
+    }).catch(error => {
+      console.error('Error insertando paciente:', error);
+      throw error;
+    })
+  );
+}
+
 
   /**
    * Obtiene el nombre completo del paciente
