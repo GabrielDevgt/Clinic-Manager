@@ -1,1 +1,112 @@
-<p>consultas works!</p>
+<div class="container">
+    <!-- Header Section -->
+    <div class="header">
+        <h1 class="title">Gestión de Consultas Médicas</h1>
+        <div class="actions">
+            <button class="btn btn-primary" (click)="irANuevaConsulta()">
+                <span class="btn-icon">➕</span>
+                Nueva Consulta
+            </button>
+
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" placeholder="Buscar por paciente, motivo o fecha..."
+                    (input)="onSearchInput($event)" [value]="terminoBusqueda">
+            </div>
+        </div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <div class="contador-resultados" *ngIf="!cargando && !error">
+            Mostrando <span class="highlight">{{ consultasFiltradas.length }}</span>
+            de <span class="highlight">{{ consultas.length }}</span> consultas
+            <span *ngIf="terminoBusqueda"> para "<strong>{{ terminoBusqueda }}</strong>"</span>
+        </div>
+
+        <button (click)="refrescar()" class="btn btn-refresh" [disabled]="cargando">
+            <span class="btn-icon">🔄</span>
+            {{ cargando ? 'Cargando...' : 'Refrescar' }}
+        </button>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="cargando" class="mensaje mensaje-carga">
+        Cargando consultas...
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error" class="mensaje mensaje-error">
+        <strong>Error:</strong> {{ error }}
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!cargando && !error && consultasFiltradas.length === 0" class="mensaje mensaje-vacio">
+        <div *ngIf="consultas.length === 0">
+            <h3>No hay consultas registradas</h3>
+            <p>Comienza agregando tu primera consulta</p>
+        </div>
+        <div *ngIf="consultas.length > 0">
+            <h3>No se encontraron resultados</h3>
+            <p>Intenta con otro término de búsqueda</p>
+        </div>
+    </div>
+
+    <!-- Table Container -->
+    <div *ngIf="!cargando && !error && consultasFiltradas.length > 0" class="tabla-container">
+        <table class="tabla-consultas">
+            <thead>
+                <tr>
+                    <th>Paciente</th>
+                    <th>Fecha</th>
+                    <th>Motivo</th>
+                    <th>Signos Vitales</th>
+                    <th>Próxima Cita</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let consulta of consultasFiltradas; trackBy: trackByConsultaId">
+                    <td>
+                        <div class="paciente-info">
+                            <div class="nombre-paciente">
+                                {{ obtenerNombrePaciente(consulta.id_paciente) }}
+                            </div>
+                            <div class="id-paciente">
+                                #{{ consulta.id_paciente }}
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <strong>{{ formatearFecha(consulta.fecha_consulta) }}</strong>
+                    </td>
+                    <td class="motivo-consulta">
+                        {{ consulta.motivo_consulta }}
+                    </td>
+                    <td>
+                        <div class="signos-vitales">
+                            <span *ngIf="consulta.peso">P: {{ consulta.peso }} kg</span>
+                            <span *ngIf="consulta.altura">A: {{ consulta.altura }} cm</span>
+                            <span *ngIf="consulta.presion_arterial">PA: {{ consulta.presion_arterial }}</span>
+                        </div>
+                    </td>
+                    <td>
+                        {{ formatearFecha(consulta.proxima_cita) || 'No programada' }}
+                    </td>
+                    <td>
+                        <div class="acciones-tabla">
+                            <button class="btn-accion btn-detalles" (click)="verDetalles(consulta.id_consulta)"
+                                title="Ver detalles de consulta">
+                                Detalles
+                            </button>
+                            <button class="btn-accion btn-editar" (click)="editarConsulta(consulta.id_consulta)"
+                                title="Editar consulta">
+                                Editar
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

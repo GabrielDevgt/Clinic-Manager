@@ -1,0 +1,422 @@
+/* enfermedades.component.scss */
+
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color: #1d222a;
+  line-height: 1.6;
+  background-color: #f8fafc;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(30, 58, 138, 0.1);
+  overflow: hidden;
+  border: 1px solid #e0f2fe;
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color: #1d222a;
+}
+
+h2 {
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #1e3a8a;
+  margin-bottom: 2rem;
+  text-align: center;
+  position: relative;
+  padding-bottom: 0.5rem;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, #3b82f6, #0ea5e9);
+    border-radius: 2px;
+  }
+}
+
+/* --- Formulario para agregar enfermedad --- */
+.form-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem 1rem;
+  margin-bottom: 2rem;
+  align-items: flex-start;
+  background-color: #f8fafc;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #e0f2fe;
+  box-shadow: 0 4px 15px rgba(30, 58, 138, 0.05);
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 calc(33% - 1rem);
+    min-width: 180px;
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: #1e3a8a;
+      font-size: 0.95rem;
+    }
+
+    /* ESTILO PARA LOS INPUTS Y SELECTS DEL FORMULARIO DE AGREGAR */
+    /* Este selector es suficientemente específico sin necesidad de IDs ni !important */
+    input[type="text"],
+    select {
+      width: 100%;
+      padding: 1rem;
+      border: 1px solid #e0f2fe;
+      border-radius: 4px;
+      font-size: 1rem;
+      color: #0f172a;
+      background-color: #ffffff;
+      transition: all 0.3s ease;
+      box-sizing: border-box; /* Fundamental para que el padding no desborde */
+
+      &:focus {
+        border-color: #0ea5e9;
+        box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
+        outline: none;
+      }
+
+      &::placeholder {
+        color: #64748b;
+        font-style: italic;
+      }
+    }
+
+input {
+      width: 100%;
+      padding: 1rem;
+      border: 1px solid #e0f2fe;
+      border-radius: 4px;
+      font-size: 1rem;
+      color: #0f172a;
+      background-color: #ffffff;
+      transition: all 0.3s ease;
+      box-sizing: border-box; /* Fundamental para que el padding no desborde */
+
+      &:focus {
+        border-color: #0ea5e9;
+        box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
+        outline: none;
+      }
+
+      &::placeholder {
+        color: #64748b;
+        font-style: italic;
+      }
+    }
+
+  }
+
+  .checkbox-field {
+    flex-direction: row;
+    align-items: center;
+    flex: 0 0 auto;
+    padding-top: 1.6rem;
+
+    label {
+      margin-bottom: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #1e3a8a;
+      font-weight: 500;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    input[type="checkbox"] {
+      appearance: none;
+      width: 1.25rem;
+      height: 1.25rem;
+      border: 2px solid #3b82f6;
+      border-radius: 4px;
+      background-color: #ffffff;
+      display: grid;
+      place-content: center;
+      transition: all 0.2s ease;
+
+      &::before {
+        content: "";
+        width: 0.75rem;
+        height: 0.75rem;
+        transform: scale(0);
+        transition: 120ms transform ease-in-out;
+        box-shadow: inset 1em 1em #3b82f6;
+        transform-origin: bottom left;
+        clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 60%);
+      }
+
+      &:checked::before {
+        transform: scale(1);
+      }
+
+      &:checked {
+        background-color: #e0f2fe;
+        border-color: #0ea5e9;
+      }
+
+      &:focus {
+        outline: 2px solid #0ea5e9;
+        outline-offset: 2px;
+      }
+    }
+  }
+
+  button {
+    padding: 1rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #3b82f6, #0ea5e9);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+    flex-shrink: 0;
+    flex-grow: 0;
+    margin-top: 1.6rem;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .form-field {
+      flex: 1 1 calc(50% - 0.5rem);
+      min-width: unset;
+    }
+    .checkbox-field {
+      padding-top: 0;
+      flex: 1 1 100%;
+      justify-content: center;
+    }
+    button {
+      flex: 1 1 100%;
+      margin-top: 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    align-items: stretch;
+    .form-field, .checkbox-field, button {
+      flex: 1 1 100%;
+      min-width: unset;
+    }
+    .checkbox-field label {
+      justify-content: center;
+    }
+  }
+}
+
+/* --- Tabla de enfermedades --- */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 2rem;
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(30, 58, 138, 0.05);
+
+  thead {
+    th {
+      background-color: #1e3a8a;
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 2px solid #1a327a;
+    }
+  }
+
+  tbody {
+    tr {
+      transition: all 0.3s ease;
+
+      &:nth-child(even) {
+        background-color: #f8fafc;
+      }
+
+      &:hover {
+        background-color: #e8f5fe;
+      }
+
+      td {
+        padding: 1rem;
+        border-bottom: 1px solid #e0f2fe;
+        color: #0f172a;
+        font-size: 0.95rem;
+
+        /* Estilos para los inputs, selects y checkboxes DENTRO DE LA TABLA para edición */
+        input[type="text"], /* General para inputs de texto en tabla */
+        select { /* General para selects en tabla */
+          width: 100%;
+          padding: 0.5rem 0.75rem;
+          border: 1px solid #cceeff;
+          border-radius: 4px;
+          font-size: 0.9rem;
+          color: #0f172a;
+          background-color: #f0f8ff;
+          transition: all 0.2s ease;
+          box-sizing: border-box;
+
+          &:focus {
+            border-color: #0ea5e9;
+            box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.15);
+            outline: none;
+            background-color: #ffffff;
+          }
+        }
+
+        /* Estilos para el checkbox dentro de la tabla */
+        label {
+          display: flex;
+          align-items: center;
+          gap: 0.4rem;
+          color: #0f172a;
+          font-size: 0.9rem;
+          white-space: nowrap;
+
+          input[type="checkbox"] {
+            appearance: none;
+            width: 1rem;
+            height: 1rem;
+            border: 1.5px solid #3b82f6;
+            border-radius: 3px;
+            background-color: #ffffff;
+            display: grid;
+            place-content: center;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            margin: 0;
+
+            &::before {
+              content: "";
+              width: 0.6rem;
+              height: 0.6rem;
+              transform: scale(0);
+              transition: 120ms transform ease-in-out;
+              box-shadow: inset 1em 1em #3b82f6;
+              transform-origin: bottom left;
+              clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 60%);
+            }
+
+            &:checked::before {
+              transform: scale(1);
+            }
+
+            &:checked {
+              background-color: #e0f2fe;
+              border-color: #0ea5e9;
+            }
+
+            &:focus {
+              outline: 2px solid #0ea5e9;
+              outline-offset: 1px;
+            }
+          }
+        }
+
+        /* Estilos para los botones dentro de la tabla */
+        button {
+          padding: 0.5rem 1rem;
+          border: none;
+          border-radius: 6px;
+          font-size: 0.85rem;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          white-space: nowrap;
+          margin-right: 0.5rem;
+
+          &:last-child {
+            margin-right: 0;
+          }
+
+          &:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          }
+
+          &:active {
+            transform: translateY(0);
+          }
+        }
+
+        button:not([class]) { /* Editar (sin clase específica) */
+          background-color: #3b82f6;
+          color: #ffffff;
+          &:hover {
+            background-color: #2563eb;
+          }
+        }
+
+        button.btn-save { /* Guardar */
+          background-color: #22c55e;
+          color: #ffffff;
+          &:hover {
+            background-color: #16a34a;
+          }
+        }
+
+        button.btn-cancel { /* Cancelar */
+          background-color: #64748b;
+          color: #ffffff;
+          &:hover {
+            background-color: #475569;
+          }
+        }
+
+        button.btn-delete { /* Eliminar */
+          background-color: #ef4444;
+          color: #ffffff;
+          &:hover {
+            background-color: #dc2626;
+          }
+        }
+      }
+    }
+  }
+
+  /* Responsive para la tabla */
+  @media (max-width: 768px) {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+
+    table {
+      min-width: 600px;
+    }
+  }
+}

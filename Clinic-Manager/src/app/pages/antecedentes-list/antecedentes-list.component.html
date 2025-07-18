@@ -1,0 +1,30 @@
+<div class="container">
+  <h2>Listado de Antecedentes Patológicos</h2>
+  
+  <div *ngIf="cargando" class="cargando">
+    Cargando antecedentes...
+  </div>
+
+  <div *ngIf="!cargando && antecedentes.length === 0" class="sin-registros">
+    No se encontraron antecedentes registrados
+  </div>
+
+  <table *ngIf="!cargando && antecedentes.length > 0">
+    <thead>
+      <tr>
+        <th>Paciente</th>
+        <th>Enfermedad</th>
+        <th>Fecha Diagnóstico</th>
+        <th>Tratamiento</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ant of antecedentes">
+        <td>{{ ant.nombre_paciente }}</td>
+        <td>{{ ant.nombre_enfermedad }}</td>
+        <td>{{ formatearFecha(ant.fecha_diagnostico) }}</td>
+        <td>{{ ant.tratamiento || 'N/A' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

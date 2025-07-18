@@ -1,1 +1,37 @@
-<p>citas works!</p>
+<h2>📅 Próximas Citas</h2>
+
+<table *ngIf="!cargando && citas.length > 0" class="tabla-citas">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Paciente</th>
+      <th>Fecha</th>
+      <th>Estado</th>
+      <th>Acción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let cita of citas">
+      <td>{{ cita.id_cita }}</td>
+      <td>{{ cita.nombre_completo }}</td>
+      <td>{{ cita.fecha_cita | date: 'longDate' }}</td>
+      <td>
+        <span [ngClass]="{
+  'estado-realizada': cita.estado_cita === 'Atendida',
+  'estado-cancelada': cita.estado_cita === 'Cancelada'
+}">{{ cita.estado_cita }}</span>
+
+      </td>
+      <td>
+        <ng-container *ngIf="cita.estado_cita === 'Pendiente'">
+          <select (change)="cambiarEstado(cita, $event)">
+           <option value="" selected disabled>Cambiar estado</option>
+            <option value="Cancelada">❌ Cancelar</option>
+            <option value="Atendida">✅ Atendida</option>
+          </select>
+
+        </ng-container>
+      </td>
+    </tr>
+  </tbody>
+</table>

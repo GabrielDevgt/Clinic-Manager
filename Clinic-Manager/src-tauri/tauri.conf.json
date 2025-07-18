@@ -4,7 +4,7 @@
   "version": "0.1.0",
       "identifier": "com.policlinica.losangeles",
   "build": {
-    "frontendDist": "../dist/clinic-manager",
+    "frontendDist": "../dist/clinic-manager/browser",
     "devUrl": "http://localhost:4200",
     "beforeDevCommand": "",
     "beforeBuildCommand": "npm run build"
@@ -13,9 +13,9 @@
     "windows": [
       {
         "title": "Policlínica-Los-Angeles",
-        "width": 1200,
+        "width": 1300,
         "height": 800,
-        "minWidth": 600,
+        "minWidth": 800,
         "minHeight": 400,
         "maxWidth": 1920,
         "maxHeight": 1080,

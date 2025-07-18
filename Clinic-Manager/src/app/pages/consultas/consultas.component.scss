@@ -1,0 +1,513 @@
+// Variables de colores - Paleta azul elegante
+$primary-blue: #1e3a8a;
+$secondary-blue: #3b82f6;
+$light-blue: #e0f2fe;
+$accent-blue: #0ea5e9;
+$dark-blue: #0f172a;
+$white: #ffffff;
+$gray-light: #f8fafc;
+$gray-medium: #64748b;
+$gray-dark: #1d222a;
+$shadow-color: rgba(30, 58, 138, 0.1);
+
+// Fuentes
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+
+// Espaciado y medidas
+$navbar-height: 80px;
+$border-radius: 8px;
+$border-radius-small: 4px;
+$transition: all 0.3s ease;
+$spacing-xs: 0.25rem;
+$spacing-sm: 0.5rem;
+$spacing-md: 1rem;
+$spacing-lg: 1.5rem;
+$spacing-xl: 2rem;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    color: $gray-dark;
+    line-height: 1.6;
+    background-color: $gray-light;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: $spacing-xl;
+    background-color: $white;
+    min-height: 100vh;
+}
+
+// ===== HEADER SECTION =====
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-xl;
+    padding-bottom: $spacing-lg;
+    border-bottom: 2px solid $light-blue;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        gap: $spacing-lg;
+        align-items: stretch;
+    }
+}
+
+.title {
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 2.25rem;
+    font-weight: 600;
+    color: $primary-blue;
+    margin: 0;
+    position: relative;
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, $secondary-blue, $accent-blue);
+        border-radius: 2px;
+    }
+
+    @media (max-width: 768px) {
+        font-size: 1.75rem;
+        text-align: center;
+    }
+}
+
+// ===== ACTIONS SECTION =====
+.actions {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        width: 100%;
+        gap: $spacing-sm;
+    }
+}
+
+// ===== SEARCH CONTAINER =====
+.search-container {
+    display: flex;
+    align-items: center;
+    background-color: $white;
+    border: 2px solid $light-blue;
+    border-radius: $border-radius;
+    padding: $spacing-sm $spacing-md;
+    min-width: 300px;
+    transition: $transition;
+
+    &:focus-within {
+        border-color: $secondary-blue;
+        box-shadow: 0 0 0 3px rgba($secondary-blue, 0.1);
+    }
+
+    @media (max-width: 768px) {
+        min-width: 100%;
+    }
+
+    .search-icon {
+        color: $gray-medium;
+        margin-right: $spacing-sm;
+        font-size: 1.1rem;
+    }
+
+    .search-input {
+        border: none;
+        outline: none;
+        flex: 1;
+        font-size: 0.95rem;
+        color: $gray-dark;
+        background: transparent;
+
+        &::placeholder {
+            color: $gray-medium;
+            font-style: normal;
+        }
+    }
+}
+
+// ===== BUTTONS =====
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: 0.75rem 1.25rem;
+    border: none;
+    border-radius: $border-radius;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 0.9rem;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+    transition: $transition;
+    text-decoration: none;
+    white-space: nowrap;
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    .btn-icon {
+        font-size: 1.1rem;
+        transition: $transition;
+    }
+
+    @media (max-width: 768px) {
+        padding: 0.65rem 1rem;
+        font-size: 0.85rem;
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, $secondary-blue, $accent-blue);
+    color: $white;
+    box-shadow: 0 4px 12px rgba($secondary-blue, 0.2);
+
+    &:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba($secondary-blue, 0.3);
+
+        .btn-icon {
+            transform: scale(1.1);
+        }
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+}
+
+.btn-secondary {
+    background-color: $white;
+    color: $secondary-blue;
+    border: 2px solid $secondary-blue;
+
+    &:hover:not(:disabled) {
+        background-color: $secondary-blue;
+        color: $white;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba($secondary-blue, 0.2);
+    }
+}
+
+.btn-refresh {
+    background-color: $gray-light;
+    color: $gray-dark;
+    border: 1px solid #e2e8f0;
+
+    &:hover:not(:disabled) {
+        background-color: #e2e8f0;
+        border-color: $gray-medium;
+    }
+}
+
+// ===== ACTION BUTTONS =====
+.acciones-tabla {
+    display: flex;
+    gap: $spacing-xs;
+}
+
+.btn-accion {
+    padding: 0.4rem 0.8rem;
+    border: 1px solid #e2e8f0;
+    background-color: $white;
+    color: $gray-dark;
+    border-radius: $border-radius-small;
+    font-size: 0.8rem;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+    transition: $transition;
+
+    &:hover {
+        background-color: $secondary-blue;
+        color: $white;
+        border-color: $secondary-blue;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba($secondary-blue, 0.2);
+    }
+
+    &.btn-editar:hover {
+        background-color: #10b981;
+        border-color: #10b981;
+    }
+
+    &.btn-historial:hover {
+        background-color: #f59e0b;
+        border-color: #f59e0b;
+    }
+}
+
+// ===== RESPONSIVE =====
+@media (max-width: 768px) {
+    .container {
+        padding: $spacing-md;
+    }
+
+    .tabla-container {
+        overflow-x: auto;
+    }
+
+    .tabla-pacientes {
+        min-width: 700px;
+    }
+
+    .acciones-tabla {
+        flex-direction: column;
+        gap: $spacing-xs;
+    }
+
+    .btn-accion {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+.btn-accion {
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 8px;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+}
+
+.btn-detalles {
+    background-color: #4a6fa5;
+    color: white;
+    
+    &:hover {
+        background-color: #3a5a8c;
+    }
+}
+
+
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.toolbar .contador-resultados {
+  color: #666;
+  font-size: 14px;
+}
+
+.toolbar .contador-resultados .highlight {
+  color: #333;
+  font-weight: bold;
+}
+
+.tabla-container {
+  overflow-x: auto;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.tabla-consultas {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-consultas th,
+.tabla-consultas td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.tabla-consultas th {
+  background-color: #f8f9fa;
+  color: #666;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+.tabla-consultas tr:hover {
+  background-color: rgba(0, 123, 255, 0.03);
+}
+
+.tabla-consultas .motivo-consulta {
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.paciente-info .nombre-paciente {
+  font-weight: 500;
+  color: #333;
+}
+
+.paciente-info .id-paciente {
+  font-size: 12px;
+  color: #666;
+}
+
+.signos-vitales {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 13px;
+  color: #666;
+}
+
+.signos-vitales span {
+  white-space: nowrap;
+}
+
+.acciones-tabla {
+  display: flex;
+  gap: 8px;
+}
+
+.btn {
+  padding: 8px 15px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.btn-refresh {
+  background-color: #f8f9fa;
+  color: #666;
+}
+
+.btn-refresh:hover {
+  background-color: #e9ecef;
+}
+
+.btn-refresh:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.btn-icon {
+  font-size: 16px;
+}
+
+.btn-accion {
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+
+.btn-accion-detalles {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.btn-accion-detalles:hover {
+  background-color: #117a8b;
+}
+
+.btn-accion-editar {
+  background-color: #ffc107;
+  color: white;
+}
+
+.btn-accion-editar:hover {
+  background-color: #d39e00;
+}
+
+.mensaje {
+  padding: 30px;
+  text-align: center;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.mensaje-carga {
+  color: #666;
+}
+
+.mensaje-error {
+  color: #dc3545;
+}
+
+.mensaje-vacio h3 {
+  color: #333;
+  margin-top: 0;
+}
+
+.mensaje-vacio p {
+  color: #666;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header .actions {
+    width: 100%;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+
+  .toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .acciones-tabla {
+    flex-direction: column;
+  }
+  
+  .tabla-consultas .motivo-consulta {
+    max-width: 150px;
+  }
+}

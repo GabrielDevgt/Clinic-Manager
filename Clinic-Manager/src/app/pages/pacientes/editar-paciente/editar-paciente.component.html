@@ -1,0 +1,101 @@
+<div class="editar-container">
+    <header class="header">
+        <button class="btn-volver" (click)="volverAPerfil()">← Volver</button>
+        <h1>Editar Paciente #{{pacienteId}}</h1>
+    </header>
+
+    <div *ngIf="isLoading; else formulario">
+        <p>Cargando datos del paciente...</p>
+    </div>
+
+    <ng-template #formulario>
+        <form class="formulario-edicion" (submit)="onSubmit()">
+            <!-- Primera fila -->
+            <div class="fila-formulario">
+                <div class="grupo-campo">
+                    <label for="nombre1">Primer Nombre *</label>
+                    <input type="text" id="nombre1" name="nombre1" required 
+                           [(ngModel)]="paciente.nombre_1" placeholder="Ej: María">
+                </div>
+                <div class="grupo-campo">
+                    <label for="nombre2">Segundo Nombre</label>
+                    <input type="text" id="nombre2" name="nombre2" 
+                           [(ngModel)]="paciente.nombre_2" placeholder="Opcional">
+                </div>
+                <div class="grupo-campo">
+                    <label for="nombre3">Tercer Nombre</label>
+                    <input type="text" id="nombre3" name="nombre3" 
+                           [(ngModel)]="paciente.nombre_3" placeholder="Opcional">
+                </div>
+            </div>
+
+            <!-- Segunda fila -->
+            <div class="fila-formulario">
+                <div class="grupo-campo">
+                    <label for="apellido1">Primer Apellido *</label>
+                    <input type="text" id="apellido1" name="apellido1" required 
+                           [(ngModel)]="paciente.apellido_1" placeholder="Ej: González">
+                </div>
+                <div class="grupo-campo">
+                    <label for="apellido2">Segundo Apellido</label>
+                    <input type="text" id="apellido2" name="apellido2" 
+                           [(ngModel)]="paciente.apellido_2" placeholder="Opcional">
+                </div>
+                <div class="grupo-campo">
+                    <label for="apellidoCasado">Apellido de Casado</label>
+                    <input type="text" id="apellidoCasado" name="apellidoCasado" 
+                           [(ngModel)]="paciente.apellido_casado" placeholder="Si aplica">
+                </div>
+            </div>
+
+            <!-- Tercera fila -->
+            <div class="fila-formulario">
+                <div class="grupo-campo">
+                    <label for="telefono">Teléfono *</label>
+                    <input type="tel" id="telefono" name="telefono" required 
+                           [(ngModel)]="paciente.telefono" placeholder="Ej: 55512345"
+                           pattern="[0-9]{8}" minlength="8" maxlength="8"
+                           title="El teléfono debe tener exactamente 8 dígitos">
+                </div>
+                <div class="grupo-campo direccion-completa">
+                    <label for="direccion">Dirección *</label>
+                    <input type="text" id="direccion" name="direccion" required 
+                           [(ngModel)]="paciente.direccion" placeholder="Calle, número, ciudad">
+                </div>
+            </div>
+
+            <!-- Cuarta fila -->
+            <div class="fila-formulario">
+                <div class="grupo-campo">
+                    <label for="fechaNacimiento">Fecha de Nacimiento *</label>
+                    <input type="date" id="fechaNacimiento" name="fechaNacimiento" required 
+                           [(ngModel)]="paciente.fecha_nacimiento">
+                </div>
+                <div class="grupo-campo">
+                    <label for="genero">Género</label>
+                    <select id="genero" name="genero" [(ngModel)]="paciente.genero">
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Mensajes de error -->
+            <div *ngIf="error" class="error-message">
+                {{ error }}
+            </div>
+
+            <!-- Botones -->
+            <div class="contenedor-botones">
+                <button type="submit" class="btn-guardar" [disabled]="isSaving">
+                    <span *ngIf="!isSaving">💾 Guardar Cambios</span>
+                    <span *ngIf="isSaving">⏳ Guardando...</span>
+                </button>
+                <button type="button" class="btn-cancelar" (click)="volverAPerfil()">
+                    ❌ Cancelar
+                </button>   
+            </div>
+        </form>
+    </ng-template>
+</div>

@@ -2,11 +2,12 @@
   "name": "clinic-manager",
   "version": "0.0.0",
   "scripts": {
-    "ng:serve": "ng serve --port 4200",
+    "ng:serve": "ng serve --port 4200 ", 
     "build": "ng build",
     "dev": "concurrently \"npm run ng:serve\" \"wait-on http://localhost:4200 && tauri dev\"",
     "start": "npm run dev",
-    "tauri:dev": "tauri dev"
+    "tauri:dev": "tauri dev",
+    "tauri:build": "tauri build" 
   },
   "private": true,
   "dependencies": {
@@ -17,6 +18,7 @@
     "@angular/platform-browser": "^19.2.0",
     "@angular/platform-browser-dynamic": "^19.2.0",
     "@angular/router": "^19.2.0",
+    "@tauri-apps/api": "^2.5.0",
     "bootstrap-icons": "^1.13.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
