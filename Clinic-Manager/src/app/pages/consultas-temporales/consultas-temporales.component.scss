@@ -1,14 +1,14 @@
 // Variables de colores - Paleta azul elegante
-$primary-blue: #1e3a8a;
-$secondary-blue: #3b82f6;
-$light-blue: #e0f2fe;
-$accent-blue: #0ea5e9;
+$primary-blue: #734abb;
+$secondary-blue: #581c69;
+$light-blue: #f9e0fe;
+$accent-blue: #de0ee9;
 $dark-blue: #0f172a;
 $white: #ffffff;
 $gray-light: #f8fafc;
 $gray-medium: #64748b;
 $gray-dark: #1d222a;
-$shadow-color: rgba(30, 58, 138, 0.1);
+$shadow-color: rgba(127, 30, 138, 0.1);
 
 // Fuentes
 $font-weight-normal: 400;
@@ -176,7 +176,7 @@ body {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, $secondary-blue, $accent-blue);
+    background: linear-gradient(155deg, #e18cdd, #9937a1);
     color: $white;
     box-shadow: 0 4px 12px rgba($secondary-blue, 0.2);
 
@@ -226,7 +226,7 @@ font-family: 'Trebuchet MS', sans-serif;
 
 .btn-accion {
     padding: 0.4rem 0.8rem;
-    border: 1px solid #182d49;
+    border: 1px solid #996597;
     background-color: $white;
     color: $gray-dark;
     border-radius: $border-radius-small;
@@ -296,11 +296,11 @@ font-family: 'Trebuchet MS', sans-serif;
 }
 
 .btn-detalles {
-    background-color: #4a6fa5;
+    background-color: #96659f;
     color: white;
     
     &:hover {
-        background-color: #3a5a8c;
+        background-color: #754a7d;
     }
 }
 
@@ -340,7 +340,7 @@ font-family: 'Trebuchet MS', sans-serif;
 }
 
 .tabla-consultas th{
-  background-color: #0b2944;
+  background-color: #6884df;
   color: white;
     padding: 12px 15px;
     color: #ffffff;
@@ -451,12 +451,12 @@ font-family: 'Trebuchet MS', sans-serif;
 }
 
 .btn-accion-detalles {
-  background-color: #17a2b8;
+  background-color: #9765b2;
   color: white;
 }
 
 .btn-accion-detalles:hover {
-  background-color: #117a8b;
+ background-color: #9349bb;
 }
 
 .btn-accion-editar {

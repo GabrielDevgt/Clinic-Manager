@@ -12,7 +12,7 @@
         .btn-volver {
             background: none;
             border: none;
-            color: #4a6fa5;
+            color: #824aa5;
             font-size: 1rem;
             cursor: pointer;
             margin-right: 1rem;
@@ -42,7 +42,7 @@
             
             h2 {
                 margin: 0;
-                color: #2c3e50;
+                color: #824aa5;
                 display: inline;
             }
 
@@ -67,7 +67,7 @@
             }
 
             h3 {
-                color: #4a6fa5;
+                color: #824aa5;
                 margin-top: 0;
                 border-bottom: 1px solid #eee;
                 padding-bottom: 0.5rem;
@@ -103,11 +103,11 @@
             }
 
             .btn-editar {
-                background-color: #4a6fa5;
+                background-color: #a54a85;
                 color: white;
 
                 &:hover {
-                    background-color: #3a5a8c;
+                    background-color: #883a8c;
                 }
             }
         }
@@ -116,7 +116,7 @@
     .loading-container {
         text-align: center;
         padding: 2rem;
-        color: #666;
+        color: #666666;
 
         .error-message {
             color: #e74c3c;

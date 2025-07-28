@@ -12,12 +12,12 @@
     h1 {
         font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         margin-left: 20px;
-        color: #2c3e50;
+        color: #5a4071;
     }
 }
 
 .btn-volver {
-    background: #3498db;
+    background: #714fda;
     color: white;
     border: none;
     padding: 8px 16px;
@@ -26,7 +26,8 @@
     font-size: 14px;
     
     &:hover {
-        background: #2980b9;
+            background: #3c277a;
+
     }
 }
 
@@ -51,20 +52,20 @@
         display: block;
         margin-bottom: 8px;
         font-weight: 500;
-        color: #34495e;
+        color: #691568;
     }
     
     input, select {
         width: 100%;
        padding: 10px 0px 10px 10px;
 
-        background-color: #dfecf1;
-        border: 1px solid #ade1f4;
+        background-color: #a675eb27;
+        border: 1px solid #ebadf4;
         border-radius: 4px;
         font-size: 14px;
         
         &:focus {
-            border-color: #3498db;
+            border-color: #d034db;
             outline: none;
         }
     }
@@ -81,7 +82,7 @@
 }
 
 .btn-guardar {
-    background: #0b3f75;
+    background: #555e99;
     color: white;
     border: none;
     padding: 12px 24px;
@@ -90,7 +91,7 @@
     font-size: 16px;
     
     &:hover:not(:disabled) {
-        background: #3f576f;
+        background: rgb(129, 94, 185);
     }
     
     &:disabled {

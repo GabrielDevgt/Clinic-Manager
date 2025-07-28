@@ -1,8 +1,8 @@
 // Variables de colores - Paleta azul elegante
-$primary-blue: #1e3a8a;
-$secondary-blue: #3b82f6;
+$primary-blue: #734abb;
+$secondary-blue: #581c69;
 $light-blue: #e0f2fe;
-$accent-blue: #0ea5e9;
+$accent-blue: #d4abec;
 $dark-blue: #0f172a;
 $white: #ffffff;
 $gray-light: #f8fafc;
@@ -176,7 +176,7 @@ body {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, $secondary-blue, $accent-blue);
+    background: linear-gradient(155deg, #e18cdd, #9937a1);
     color: $white;
     box-shadow: 0 4px 12px rgba($secondary-blue, 0.2);
 
@@ -305,7 +305,7 @@ body {
     font-size: 0.9rem;
 
     th {
-        background-color: #0b2944;
+        background-color: #6884df;
         color: $white;
         font-size: 1rem;
         letter-spacing: 0.2px;
@@ -459,11 +459,11 @@ body {
 }
 
 .btn-detalles {
-    background-color: #4a6fa5;
+    background-color: #9765b2;
     color: white;
     
     &:hover {
-        background-color: #3a5a8c;
+        background-color: #803a8c;
     }
 }
 /* Estilos para la paginación */

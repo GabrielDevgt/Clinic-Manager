@@ -15,11 +15,11 @@
 
 /* Paleta de colores suaves como nubes */
 :host {
-    --azul-claro: #e6f2ff;
-    --azul-medio: #b3d9ff;
-    --azul-oscuro: #80bfff;
-    --azul-profundo: #25425f;
-    --sombra-suave: 0 4px 12px rgba(77, 166, 255, 0.15);
+    --azul-claro: #efe6ff;
+    --azul-medio: #7e54b4;
+    --azul-oscuro: #966799;
+    --azul-profundo: #8262ad;
+    --sombra-suave: 0 4px 12px rgba(207, 127, 227, 0.547);
     --borde-redondeado: 8px;
     --transicion: all 0.3s ease;
 }
@@ -119,11 +119,11 @@ input:focus,
 select:focus {
     outline: none;
     border-color: var(--azul-profundo);
-    box-shadow: 0 0 0 2px rgba(77, 166, 255, 0.2);
+    box-shadow: 0 0 0 2px rgba(205, 77, 255, 0.2);
 }
 
 input::placeholder {
-    color: #a3c7e6;
+    color: #422543;
     opacity: 1;
 }
 
@@ -190,8 +190,8 @@ select {
 }
 
 .btn-guardar:hover {
-    background-color: var(--azul-oscuro);
-    color: #25425f;
+    background-color: #8262ad;
+    color: #46255f;
 }
 
 .btn-cancelar {

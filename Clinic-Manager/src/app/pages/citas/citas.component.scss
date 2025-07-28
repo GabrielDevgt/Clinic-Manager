@@ -1,7 +1,8 @@
 h2 {
   font-size: 1.8rem;
+  font-family: 'Trebuchet MS', sans-serif;
   margin-bottom: 1rem;
-  color: #2c3e50;
+  color:#734abb;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -23,17 +24,14 @@ h2 {
   }
 
   thead {
-    background-color: #dceefc;
 
     th {
       font-weight: 600;
-      color: #34495e;
+      background-color: #6884df;
+      color: white;
     }
   }
 
-  tbody tr:hover {
-    background-color: #eef6fb;
-  }
 
   select {
     padding: 6px 12px;
@@ -55,7 +53,7 @@ h2 {
     }
 
     &:focus {
-      border-color: #3498db;
+      border-color: #a334db;
       outline: none;
       box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
     }

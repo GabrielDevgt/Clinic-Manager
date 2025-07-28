@@ -1,14 +1,14 @@
 // Variables de colores - Paleta azul elegante
-$primary-blue: #1e3a8a;       // Azul profundo
-$secondary-blue: #3b82f6;     // Azul medio
-$light-blue: #e0f2fe;         // Azul muy claro
-$accent-blue: #0ea5e9;        // Azul vibrante
-$dark-blue: #0f172a;          // Azul muy oscuro
+$primary-blue: #2c0648;       // Azul profundo
+$secondary-blue: hsl(282, 76%, 21%);     // Azul medio
+$light-blue: #bff3ff;         // Azul muy claro
+$accent-blue: #d056b4;        // Azul vibrante
+$dark-blue: #f2c1ef;          // Azul muy oscuro
 $white: #ffffff;
 $gray-light: #f8fafc;
-$gray-medium: #64748b;
-$shadow-color: rgba(30, 58, 138, 0.1);
-$gray-dark:#1d222a;
+$gray-medium: #41293f;
+$shadow-color: rgba(237, 237, 237, 0.1);
+$gray-dark:#614762;
 
 // Fuentes
 $font-primary: 'Inter', 'Segoe UI', sans-serif;
@@ -29,15 +29,15 @@ $transition: all 0.3s ease;
   background: linear-gradient(135deg, $white 0%, $light-blue 100%);
   border-bottom: 1px solid rgba($primary-blue, 0.1);
   box-shadow: 0 4px 20px $shadow-color;
-  padding: 0 2rem;
+  padding: 0 1rem;
   font-family: $font-primary;
   position: sticky;
-  top: 0;
+  top: -20;
   z-index: 100;
   backdrop-filter: blur(10px); // Efecto de cristal esmerilado
+      // Ocupa todo el ancho de la ventana
+  
 
-  // Media query general para pantallas más pequeñas (activará el responsive para Tauri minWidth: 800)
-  // Podemos ajustar este 750px si necesitas que el cambio sea ANTES de los 800px
   @media (max-width: 800px) { // Considera este el breakpoint donde las cosas se compactan
     padding: 0 1rem; // Reduce el padding horizontal
     height: auto;    // Permite que la altura se ajuste si los elementos se envuelven
@@ -133,7 +133,7 @@ $transition: all 0.3s ease;
     &:hover {
       background: $light-blue;
       color: $primary-blue;
-      border-color: #d7e9f2;
+      border-color: #e7d7f218;
       transform: translateY(-2px);
       box-shadow: 0 8px 25px rgba($secondary-blue, 0.3);
 
